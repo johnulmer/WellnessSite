@@ -23,10 +23,10 @@ public class MemberJSONController {
 private MemberRepository memberRepository;
 
 /**
- * Accepts a JSON Member object with email, password, screenName set, 
+ * Accepts a JSON Member object with email, password, screenName set & default values for active and admin. 
  * returns JSON Member object with auto-generated ID.
  *
- * @param addingMember A Member object with values for email, password, screenName.
+ * @param addingMember A Member object with values for email, password, screenName and default values for active and admin.
  * @return             returnedMember with ID set
  * @see                Member
  */
@@ -35,7 +35,6 @@ private MemberRepository memberRepository;
 public Member addMember(@RequestBody @Valid Member addingMember) {
 	Member returnedMember = memberRepository.save(addingMember);
 	return returnedMember;
-	//return new Member("john", "john@blah.com", "pwd", true);
 }
 
 /**
@@ -62,10 +61,10 @@ public Member getMemberByID(@PathVariable Integer id) {
 	return memberRepository.getOne(id);
 }
 /**
- * Accepts a JSON Member object with screenName, email, and /or password set 
+ * Accepts a JSON Member object with screenName, email, password, admin, and / or active set. 
  * returns a JSON Member object showing the updated values.
  *
- * @param updatingMember A Member object with values for ID & optionally for screenName, email, and /or password.
+ * @param updatingMember A Member object with values for ID & optionally for screenName, email, password, admin, and / or active.
  * @return               returnedMember showing updated values
  * @see                  Member
  */
@@ -86,6 +85,11 @@ public Member updateMember(@PathVariable Integer id,
 	if (updatingMember.isActive()) {
 		m.setActive(true);
 	} else if (!(updatingMember.isActive())) {
+		m.setActive(false);
+	}
+	if (updatingMember.isAdmin()) {
+		m.setActive(true);
+	} else if (!(updatingMember.isAdmin())) {
 		m.setActive(false);
 	}
 	memberRepository.save(m);
@@ -121,13 +125,42 @@ public Member activateMember(@PathVariable Integer id) {
 	memberRepository.save(m);
 	return m;
 }
+/**
+ * Given a screenName or email, find Members that match.
+ *
+ * @param email         A String that could be part or all of an email.
+ * @param screenName    A String that could be part or all of a screenName.
+ * @return              memberList a list of matching members
+ * @see                 Member
+ */
+@ApiOperation(value = "Find members based on email or screenName")
+@RequestMapping(path = "/findMember", method = RequestMethod.GET)
+public List<Member> findMemberBySearch(String screenName, String email) {
+	// http://localhost:8080/findMember?screenName=john&email=blah
+	List<Member> memberList = memberRepository.findMemberBySearch(screenName, email);
+	return memberList;
+}
+/**
+ * Given an email & password, authenticate user.
+ *
+ * @param	Member	A Member object with email and password set.
+ * @return          returnMember - An authenticated member.
+ * @see             Member
+ */
+@ApiOperation(value = "Authenticate Member based on email and password.")
+@RequestMapping(path = "/authenticate", method = RequestMethod.GET)
+public Member authenticateMember(Member m) {
+	// http://localhost:8080/findMember?screenName=john&email=blah
+	Member returnMember = memberRepository.authenticateMember(m);
+	return returnMember;
+}
 @RequestMapping(path = "/api/resetMemberTable", method = RequestMethod.GET)
 public void resetMemberTable() {	
-	memberRepository.save(new Member("john1", "john1@blah.com", "pwd", true));
-	memberRepository.save(new Member("john2", "john2@blah.com", "pwd", true));
-	memberRepository.save(new Member("john3", "john3@blah.com", "pwd", true));
-	memberRepository.save(new Member("john4", "john4@blah.com", "pwd", true));
-	memberRepository.save(new Member("john5", "john5@blah.com", "pwd", true));
-	memberRepository.save(new Member("john6", "john6@blah.com", "pwd", true));
+	memberRepository.save(new Member("john1", "john1@blah.com", "pwd", true, true));
+	memberRepository.save(new Member("john2", "john2@blah.com", "pwd", true, false));
+	memberRepository.save(new Member("john3", "john3@blah.com", "pwd", true, true));
+	memberRepository.save(new Member("john4", "john4@blah.com", "pwd", true, true));
+	memberRepository.save(new Member("john5", "john5@blah.com", "pwd", true, false));
+	memberRepository.save(new Member("john6", "john6@blah.com", "pwd", true, false));
 }
 }

@@ -26,14 +26,16 @@ public class Member {
 	private String email;
 	private String password;
 	private boolean active;
+	private boolean admin;
 
 	public Member() {
 	}
-	public Member(String screenName, String email, String password, boolean active) {
+	public Member(String screenName, String email, String password, boolean active, boolean admin) {
 		this.screenName = screenName;
 		this.email = email;
 		this.password = password;
 		this.active = active;
+		this.admin = admin;
 	}
 	
 	public int getId() {
@@ -62,6 +64,12 @@ public class Member {
 	}
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	public boolean isAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 }
