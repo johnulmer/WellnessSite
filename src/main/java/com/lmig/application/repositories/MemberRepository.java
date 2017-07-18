@@ -16,9 +16,9 @@ public interface MemberRepository extends JpaRepository<Member, Integer>{
 			+ "(:screenName is null OR UPPER(m.screenName) LIKE UPPER(CONCAT('%',:screenName,'%')))")
 	public List<Member> findMemberBySearch(@Param("screenName") String screenName, @Param("email") String email);
 
-	@Query("select m from Member m where "
-			+ "(:email = :unAuthMember.getEmail()) AND "
-			+ "(:password = :unAuthMember.getPassword())")
-	public Member authenticateMember(@RequestBody Member unAuthMember);
-	//public Member authenticateMember(@Param("email") String screenName, @Param("screenName") String email);
+//	@Query("select m from Member m where "
+//			+ "(:email = :unAuthMember.getEmail()) AND "
+//			+ "(:password = :unAuthMember.getPassword())")
+//	public Member authenticateMember(@RequestBody Member unAuthMember);
+//	//public Member authenticateMember(@Param("email") String screenName, @Param("screenName") String email);
 }
