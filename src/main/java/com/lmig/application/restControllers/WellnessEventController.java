@@ -23,7 +23,6 @@ import com.lmig.application.repositories.WellnessEventRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@SpringBootApplication
 @RestController
 @Api(value = "Wellness Events")
 
@@ -51,7 +50,7 @@ public class WellnessEventController implements Controller {
 	@ApiOperation(value = "Add an Event", notes = "adds a new event - event name must be in request body and must not already\n"
 			+ " exist")
 	public ResponseEntity<WellnessEvent> createEvent(@RequestBody WellnessEvent e) {
-		System.out.println("/api/person POST " + e.getEventName());
+		System.out.println("/api/event POST " + e.getEventName());
 		if (e.getEventName() == null) {
 			return new ResponseEntity<WellnessEvent>(HttpStatus.BAD_REQUEST);
 		}
@@ -98,16 +97,14 @@ public class WellnessEventController implements Controller {
 		wellnessEventRepo.save(new WellnessEvent("Event6", "Date6", "Date7", "Indy5", "StepsForever5", "Community"));
 	}
 
-	
 	@ApiOperation(value = "Returns a list of all Events")
 	@RequestMapping(path = "/api/getAllEvents", method = RequestMethod.GET)
 	public List<WellnessEvent> getAllEvents() {
 		System.out.println("I am here");
-	    List<WellnessEvent> wellnessEvent = wellnessEventRepo.findAll();
-	    return wellnessEvent;
+		List<WellnessEvent> wellnessEvent = wellnessEventRepo.findAll();
+		return wellnessEvent;
 	}
-	
-	
+
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();

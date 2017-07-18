@@ -17,7 +17,7 @@ public class WellnessSiteApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WellnessSiteApplication.class, args);
-		System.out.println("Environment variable ENERGYs value is: " + System.getenv("ENERGY"));
+		//System.out.println("Environment variable ENERGYs value is: " + System.getenv("ENERGY"));
 	}
     @Bean
     public Docket swaggerSettings() {
