@@ -1,4 +1,4 @@
-package com.lmig.application;
+package com.lmig.application.restControllers;
 
 import java.util.List;
 import javax.validation.Valid;
@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.lmig.application.entities.Member;
+import com.lmig.application.repositories.MemberRepository;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
