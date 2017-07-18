@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.lmig.application.restControllers;
 
 import java.util.List;
 
@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
+
+import com.lmig.application.entities.WellnessEvent;
+import com.lmig.application.repositories.WellnessEventRepo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

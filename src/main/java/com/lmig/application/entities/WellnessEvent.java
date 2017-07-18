@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.lmig.application.entities;
 
 import java.io.Serializable;
 
