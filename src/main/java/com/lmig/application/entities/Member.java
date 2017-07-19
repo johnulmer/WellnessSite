@@ -1,11 +1,18 @@
 package com.lmig.application.entities;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -27,7 +34,20 @@ public class Member {
 	private String password;
 	private boolean active;
 	private boolean admin;
+	
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "members", cascade=CascadeType.ALL)
+	@JsonBackReference
+	private Set<WellnessEvent> wellnessEvents;
 
+	
+	public Set<WellnessEvent> getWellnessEvents() {
+		return wellnessEvents;
+	}
+
+	public void setWellnessEvents(Set<WellnessEvent> wellnessEvents) {
+		this.wellnessEvents = wellnessEvents;
+	}
+	
 	public Member() {
 	}
 	public Member(String screenName, String email, String password, boolean active, boolean admin) {
