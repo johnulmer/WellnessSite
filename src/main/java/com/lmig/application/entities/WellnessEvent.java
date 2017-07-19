@@ -1,10 +1,15 @@
 package com.lmig.application.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +29,21 @@ public class WellnessEvent implements Serializable {
 	private String description;
 	private String type;
 
+	@JoinTable(name = "wellnessevent_member", joinColumns = @JoinColumn(name = "wellnessevent_id") , 
+			inverseJoinColumns = @JoinColumn(name = "member_id") )
+    @ManyToMany(fetch = FetchType.EAGER)
+	private Set<Member> members;	
+	
+	public Set<Member> getMembers() {
+		return members;
+	}
+	public void addMember(Member member) {
+		this.members.add(member);
+	}
+	public void removeMember(Member member) {
+		this.members.remove(member);
+	}
+	
 	public WellnessEvent() {
 
 	}

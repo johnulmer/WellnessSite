@@ -154,6 +154,8 @@ public List<Member> findMemberBySearch(String screenName, String email) {
 //	Member returnMember = memberRepository.authenticateMember(m);
 //	return returnMember;
 //}
+
+
 @RequestMapping(path = "/api/resetMemberTable", method = RequestMethod.GET)
 public void resetMemberTable() {	
 	memberRepository.save(new Member("john1", "john1@blah.com", "pwd", true, true));

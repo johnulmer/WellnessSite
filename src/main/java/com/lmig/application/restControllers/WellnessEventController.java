@@ -32,6 +32,7 @@ public class WellnessEventController implements Controller {
 	@Autowired
 	private WellnessEventRepo wellnessEventRepo;
 
+
 	// returns event by name
 	@RequestMapping(path = "/api/event/{eventName}", method = RequestMethod.GET)
 	@ApiOperation(value = "Get Event by Name", notes = "Returns event object matching name")
