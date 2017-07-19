@@ -33,6 +33,8 @@ private MemberRepository memberRepository;
 @ApiOperation(value = "Adds a new member")
 	@RequestMapping(path = "/api/member/", method = RequestMethod.POST)
 public Member addMember(@RequestBody @Valid Member addingMember) {
+	addingMember.setActive(true);
+	addingMember.setAdmin(false);
 	Member returnedMember = memberRepository.save(addingMember);
 	return returnedMember;
 }
@@ -134,7 +136,7 @@ public Member activateMember(@PathVariable Integer id) {
  * @see                 Member
  */
 @ApiOperation(value = "Find members based on email or screenName")
-@RequestMapping(path = "/findMember", method = RequestMethod.GET)
+@RequestMapping(path = "/api/findMember", method = RequestMethod.GET)
 public List<Member> findMemberBySearch(String screenName, String email) {
 	// http://localhost:8080/findMember?screenName=john&email=blah
 	List<Member> memberList = memberRepository.findMemberBySearch(screenName, email);

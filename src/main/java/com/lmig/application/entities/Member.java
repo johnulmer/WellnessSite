@@ -44,9 +44,9 @@ public class Member {
 		return wellnessEvents;
 	}
 
-	public void setWellnessEvents(Set<WellnessEvent> wellnessEvents) {
-		this.wellnessEvents = wellnessEvents;
-	}
+//	public void setWellnessEvents(Set<WellnessEvent> wellnessEvents) {
+//		this.wellnessEvents = wellnessEvents;
+//	}
 	
 	public Member() {
 	}

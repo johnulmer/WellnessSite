@@ -15,6 +15,7 @@ public class SercurityConfig  extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         // we only perform security on everything under /api  (note we put login under /login so it will be open :D
-        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/api/**");
+//        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/api/**");
+        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/api/findMember");     
     }
 }
