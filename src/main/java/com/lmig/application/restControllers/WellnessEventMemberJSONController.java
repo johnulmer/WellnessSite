@@ -25,48 +25,54 @@ public class WellnessEventMemberJSONController {
 	@Autowired
 	private MemberRepository memberRepository;
 
-	@ApiOperation(value = "testing adding members to event")
-	@RequestMapping(path = "/api/testAddEventMembers", method = RequestMethod.GET)
-	public WellnessEvent testAddEventMembers() {
-		System.out.println("event member connection");
-		WellnessEvent we = wellnessEventRepository.findOne(4);
-		we.addMember(memberRepository.findOne(2));
-		we.addMember(memberRepository.findOne(3));
-		we.addMember(memberRepository.findOne(6));
-		wellnessEventRepository.save(we);
-	    return we;
-	}
+//	@ApiOperation(value = "testing adding members to event")
+//	@RequestMapping(path = "/api/testAddEventMembers", method = RequestMethod.GET)
+//	public WellnessEvent testAddEventMembers() {
+//		System.out.println("event member connection");
+//		WellnessEvent we = wellnessEventRepository.findOne(4);
+//		we.addMember(memberRepository.findOne(2));
+//		we.addMember(memberRepository.findOne(3));
+//		we.addMember(memberRepository.findOne(6));
+//		wellnessEventRepository.save(we);
+//	    return we;
+//	}
 	
-	@ApiOperation(value = "testing adding a member to events")
+	/**
+	 * TODO retrieves Member from Session and adds the member to each WellnessEvent in the list. 
+	 *
+	 * @param eventList A list of WellnessEvents to add a Member to.
+	 * @param Member    A Member retrieved from the session (currently hard-coded).
+	 * @see             Member
+	 * @see             WellnessEvent
+	 */
+	@ApiOperation(value = "Adds a Member to a set of WellnessEvents")
 	@RequestMapping(path = "/api/addMemberToEvent", method = RequestMethod.PUT)
 	public void addMemberToEvents(@RequestBody Set<WellnessEvent> eventList) {
-
-	    Member addingMember = memberRepository.findOne(2); // update this from session when session is set
-		System.out.println("adding " + addingMember.getScreenName() + " to events");
+	    Member addingMember = memberRepository.findOne(2); // TODO update this from session when session is set
 		for (WellnessEvent we : eventList) {
-		    System.out.println("ID: " + we.getId());
 		    WellnessEvent weAdding = wellnessEventRepository.findOne(we.getId());
 			weAdding.addMember(addingMember);  
 			wellnessEventRepository.saveAndFlush(weAdding);
 		}
 	}
 
-	@ApiOperation(value = "testing removing a member from events")
+	/**
+	 * TODO retrieves Member from Session and removes the member from each WellnessEvent in the list. 
+	 *
+	 * @param eventList A list of WellnessEvents to remove a Member from.
+	 * @param Member    A Member retrieved from the session (currently hard-coded).
+	 * @see             Member
+	 * @see             WellnessEvent
+	 */
+	@ApiOperation(value = "Remove a Member from a set of WellnessEvents")
 	@RequestMapping(path = "/api/removeMemberFromEvents", method = RequestMethod.PUT)
 	public void removeMemberFromEvents(@RequestBody Set<WellnessEvent> eventList) {
-		
-	    Member removingMember = memberRepository.findOne(2); // update this from session when session is set
-		System.out.println("removing " + removingMember.getScreenName() + " from events");
-		
+	    Member removingMember = memberRepository.findOne(2); // TODO update this from session when session is set
 		for (WellnessEvent we : eventList) {
-		    System.out.println("ID: " + we.getId());
 		    WellnessEvent weRemoving = wellnessEventRepository.findOne(we.getId());
 		    weRemoving.removeMember(removingMember);  
 			wellnessEventRepository.saveAndFlush(weRemoving);
 		}
-//		WellnessEvent we = wellnessEventRepository.findOne(4);
-//		we.addMember(memberRepository.findOne(2));
-//		wellnessEventRepository.save(we);
 	}
 	
 	
