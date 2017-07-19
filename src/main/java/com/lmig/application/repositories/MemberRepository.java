@@ -25,4 +25,7 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 	// public Member authenticateMember(@RequestBody Member unAuthMember);
 	// //public Member authenticateMember(@Param("email") String screenName,
 	// @Param("screenName") String email);
+
+	public Member findByScreenNameAndPassword(String email, String password);
+
 }
