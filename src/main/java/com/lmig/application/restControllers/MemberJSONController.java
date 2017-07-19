@@ -31,7 +31,7 @@ private MemberRepository memberRepository;
  * @see                Member
  */
 @ApiOperation(value = "Adds a new member")
-	@RequestMapping(path = "/api/member/", method = RequestMethod.POST)
+	@RequestMapping(path = "/member/", method = RequestMethod.POST)
 public Member addMember(@RequestBody @Valid Member addingMember) {
 	Member returnedMember = memberRepository.save(addingMember);
 	return returnedMember;
