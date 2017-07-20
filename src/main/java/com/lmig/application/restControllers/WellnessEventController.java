@@ -101,7 +101,7 @@ public class WellnessEventController implements Controller {
 	@ApiOperation(value = "Returns a list of all Events")
 	@RequestMapping(path = "/api/getAllEvents", method = RequestMethod.GET)
 	public List<WellnessEvent> getAllEvents() {
-		System.out.println("I am here");
+		//System.out.println("I am here");
 		List<WellnessEvent> wellnessEvent = wellnessEventRepo.findAll();
 		return wellnessEvent;
 	}

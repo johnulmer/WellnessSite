@@ -5,9 +5,7 @@ import com.lmig.application.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * Created by jasonskipper on 7/18/17, just using to pump some initial data into DB.
- */
+
 @Component
 public class DataLoader {
 

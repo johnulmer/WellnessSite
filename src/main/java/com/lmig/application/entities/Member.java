@@ -27,6 +27,7 @@ public class Member {
 	@GeneratedValue
 	@ApiModelProperty(required = true)
 	int id;
+	
 
 	@NotNull
 	private String screenName;

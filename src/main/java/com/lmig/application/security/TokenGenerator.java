@@ -34,7 +34,7 @@ public class TokenGenerator {
 
 
     /**
-     * This will generate and encrypte a token that can be used with all JSON apis.  I am
+     * This will generate and encrypt a token that can be used with all JSON apis.  I am
      * using the Blowfish encryption algo and
      *
      * @return Returns a String object with the encrypted token as its value

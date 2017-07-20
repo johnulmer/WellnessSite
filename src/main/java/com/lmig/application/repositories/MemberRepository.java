@@ -26,6 +26,9 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 	// //public Member authenticateMember(@Param("email") String screenName,
 	// @Param("screenName") String email);
 
-	public Member findByScreenNameAndPassword(String email, String password);
+	@Query("select m from Member m where "
+			+ "(UPPER(m.email) = UPPER(:email)) AND "
+			+ "(UPPER(m.password) = UPPER(:password))")
+	public Member findByEmailAndPassword(@Param("email")String email, @Param("password") String password);
 
 }

@@ -24,6 +24,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         String key = httpServletRequest.getHeader("x-authorization-key");
         if (key != null) {
             authorized = TokenGenerator.isValidKey(key);
+            httpServletResponse.setStatus(HttpStatus.OK.value());
         }
 
         if(!authorized){
