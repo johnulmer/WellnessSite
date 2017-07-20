@@ -32,7 +32,7 @@ public class MemberJSONController {
  * @see                Member
  */
 @ApiOperation(value = "Adds a new member")
-	@RequestMapping(path = "/member/", method = RequestMethod.POST)
+	@RequestMapping(path = "/api/member", method = RequestMethod.POST)
 public Member addMember(@RequestBody @Valid Member addingMember) {
 	addingMember.setActive(true);
 	addingMember.setAdmin(false);
@@ -169,20 +169,7 @@ public Member addMember(@RequestBody @Valid Member addingMember) {
 		List<Member> memberList = memberRepository.findMemberBySearch(screenName, email);
 		return memberList;
 	}
-	/// **
-	// * Given an email & password, authenticate user.
-	// *
-	// * @param Member A Member object with email and password set.
-	// * @return returnMember - An authenticated member.
-	// * @see Member
-	// */
-	// @ApiOperation(value = "Authenticate Member based on email and password.")
-	// @RequestMapping(path = "/authenticate", method = RequestMethod.GET)
-	// public Member authenticateMember(Member m) {
-	// // http://localhost:8080/findMember?screenName=john&email=blah
-	// Member returnMember = memberRepository.authenticateMember(m);
-	// return returnMember;
-	// }
+
 
 	@RequestMapping(path = "/api/resetMemberTable", method = RequestMethod.GET)
 	public void resetMemberTable() {

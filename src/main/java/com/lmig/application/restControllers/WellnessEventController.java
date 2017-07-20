@@ -75,7 +75,7 @@ public class WellnessEventController implements Controller {
 	}
 
 	@RequestMapping(path = "/api/event", method = RequestMethod.PUT)
-	@ApiOperation(value = "Updated Person", notes = "Update/merge for an existing person whose ID matches \"id\" in json body of\n"
+	@ApiOperation(value = "Updated event", notes = "Update/merge for an existing event whose ID matches \"id\" in json body of\n"
 			+ " request\n")
 	public ResponseEntity<WellnessEvent> updatePerson(@RequestBody WellnessEvent e) {
 		System.out.println("/api/event PUT ");
