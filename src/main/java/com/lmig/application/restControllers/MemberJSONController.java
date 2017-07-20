@@ -19,8 +19,27 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Members", description = "JSON operations pertaining to WellnessSite Members")
 public class MemberJSONController {
 
+
 	@Autowired
 	private MemberRepository memberRepository;
+
+/**
+ * Accepts a JSON Member object with email, password, screenName set & default values for active and admin. 
+ * returns JSON Member object with auto-generated ID.
+ *
+ * @param addingMember A Member object with values for email, password, screenName and default values for active and admin.
+ * @return             returnedMember with ID set
+ * @see                Member
+ */
+@ApiOperation(value = "Adds a new member")
+	@RequestMapping(path = "/member/", method = RequestMethod.POST)
+public Member addMember(@RequestBody @Valid Member addingMember) {
+	addingMember.setActive(true);
+	addingMember.setAdmin(false);
+	Member returnedMember = memberRepository.save(addingMember);
+	return returnedMember;
+}
+
 
 	/**
 	 * Accepts a JSON Member object with email, password, screenName set & default
@@ -33,12 +52,6 @@ public class MemberJSONController {
 	 * @return returnedMember with ID set
 	 * @see Member
 	 */
-	@ApiOperation(value = "Adds a new member")
-	@RequestMapping(path = "/api/member", method = RequestMethod.POST)
-	public Member addMember(@RequestBody @Valid Member addingMember) {
-		Member returnedMember = memberRepository.save(addingMember);
-		return returnedMember;
-	}
 
 	/**
 	 * Return a list of Members in the DB as JSON objects.
@@ -119,6 +132,7 @@ public class MemberJSONController {
 		memberRepository.save(m);
 		return m;
 	}
+	
 
 	/**
 	 * Given a member ID (int), make that member Active.
@@ -138,16 +152,16 @@ public class MemberJSONController {
 		return m;
 	}
 
-	/**
-	 * Given a screenName or email, find Members that match.
-	 *
-	 * @param email
-	 *            A String that could be part or all of an email.
-	 * @param screenName
-	 *            A String that could be part or all of a screenName.
-	 * @return memberList a list of matching members
-	 * @see Member
-	 */
+
+/**
+ * Given a screenName or email, find Members that match.
+ *
+ * @param email         A String that could be part or all of an email.
+ * @param screenName    A String that could be part or all of a screenName.
+ * @return              memberList a list of matching members
+ * @see                 Member
+ */
+
 	@ApiOperation(value = "Find members based on email or screenName")
 	@RequestMapping(path = "/findMember", method = RequestMethod.GET)
 	public List<Member> findMemberBySearch(String screenName, String email) {
