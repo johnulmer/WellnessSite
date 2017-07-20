@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -39,6 +40,8 @@ public class Member {
 	@JsonBackReference
 	private Set<WellnessEvent> wellnessEvents;
 
+    @OneToMany
+	private Set<Medallion> medallions;
 	
 	public Set<WellnessEvent> getWellnessEvents() {
 		return wellnessEvents;
@@ -57,8 +60,21 @@ public class Member {
 		this.active = active;
 		this.admin = admin;
 	}
+	public Member(String screenName, String email, String password, boolean active, boolean admin, Medallion medallion) {
+		this.screenName = screenName;
+		this.email = email;
+		this.password = password;
+		this.active = active;
+		this.admin = admin;
+		this.medallions.add(medallion);
+	}
 	
-	
+	public void addMedallion(Medallion medallion) {
+		this.medallions.add(medallion);
+	}
+	public void removeMedallion(Medallion medallion) {
+		this.medallions.remove(medallion);
+	}	
 	public int getId() {
 		return id;
 	}

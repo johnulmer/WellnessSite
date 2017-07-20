@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lmig.application.entities.Medallion;
 import com.lmig.application.entities.Member;
 import com.lmig.application.repositories.MemberRepository;
 
@@ -142,29 +143,18 @@ public List<Member> findMemberBySearch(String screenName, String email) {
 	List<Member> memberList = memberRepository.findMemberBySearch(screenName, email);
 	return memberList;
 }
-///**
-// * Given an email & password, authenticate user.
-// *
-// * @param	Member	A Member object with email and password set.
-// * @return          returnMember - An authenticated member.
-// * @see             Member
-// */
-//@ApiOperation(value = "Authenticate Member based on email and password.")
-//@RequestMapping(path = "/authenticate", method = RequestMethod.GET)
-//public Member authenticateMember(Member m) {
-//	// http://localhost:8080/findMember?screenName=john&email=blah
-//	Member returnMember = memberRepository.authenticateMember(m);
-//	return returnMember;
-//}
+
+
 
 
 @RequestMapping(path = "/api/resetMemberTable", method = RequestMethod.GET)
-public void resetMemberTable() {	
-	memberRepository.save(new Member("john1", "john1@blah.com", "pwd", true, true));
-	memberRepository.save(new Member("john2", "john2@blah.com", "pwd", true, false));
-	memberRepository.save(new Member("john3", "john3@blah.com", "pwd", true, true));
-	memberRepository.save(new Member("john4", "john4@blah.com", "pwd", true, true));
-	memberRepository.save(new Member("john5", "john5@blah.com", "pwd", true, false));
-	memberRepository.save(new Member("john6", "john6@blah.com", "pwd", true, false));
+public void resetMemberTable() {
+	Medallion joinerMedallion = new Medallion("Wellness Site Member", "I am a Wellness Site Member!");
+	memberRepository.save(new Member("john1", "john1@blah.com", "pwd", true, true, joinerMedallion));
+	memberRepository.save(new Member("john2", "john2@blah.com", "pwd", true, false, joinerMedallion));
+	memberRepository.save(new Member("john3", "john3@blah.com", "pwd", true, true, joinerMedallion));
+	memberRepository.save(new Member("john4", "john4@blah.com", "pwd", true, true, joinerMedallion));
+	memberRepository.save(new Member("john5", "john5@blah.com", "pwd", true, false, joinerMedallion));
+	memberRepository.save(new Member("john6", "john6@blah.com", "pwd", true, false, joinerMedallion));
 }
 }
