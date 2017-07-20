@@ -31,7 +31,7 @@ public class MemberJSONController {
  * @return             returnedMember with ID set
  * @see                Member
  */
-@ApiOperation(value = "Adds a new member")
+@ApiOperation(value = "Adds a new member requires JSON object")
 	@RequestMapping(path = "/api/member", method = RequestMethod.POST)
 public Member addMember(@RequestBody @Valid Member addingMember) {
 	addingMember.setActive(true);
@@ -72,7 +72,7 @@ public Member addMember(@RequestBody @Valid Member addingMember) {
 	 * @return Member - a Member matching a specific ID.
 	 * @see Member
 	 */
-	@ApiOperation(value = "Returns Member matching ID")
+	@ApiOperation(value = "Returns Member matching ID, requires path variable ID")
 	@RequestMapping(path = "/api/member/{id}", method = RequestMethod.GET)
 	public Member getMemberByID(@PathVariable Integer id) {
 		return memberRepository.getOne(id);
