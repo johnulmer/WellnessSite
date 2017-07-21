@@ -1,5 +1,7 @@
 package com.lmig.application.restControllers;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -103,14 +105,17 @@ public class WellnessEventController implements Controller {
 	
 	@RequestMapping(path = "/api/resetWellnessEvent", method = RequestMethod.GET)
 	public void resetWellnessEvent() {
+		LocalDate d = LocalDate.now();
+		LocalDate tomorrow = d.plus(1, ChronoUnit.DAYS);
 		
-		wellnessEventRepo.save(new WellnessEvent("Event1", null, null, "Indy", "StepsForever", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event2", null, null, "Indy1", "StepsForever1", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event3", null, null, "Indy2", "StepsForever2", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event4", null, null, "Indy3", "StepsForever3", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event5", null, null, "Indy4", "StepsForever4", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event6", null, null, "Indy5", "StepsForever5", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event1", d, tomorrow, "Indy", "StepsForever", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event2", d, tomorrow, "Indy1", "StepsForever1", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event3", d, tomorrow, "Indy2", "StepsForever2", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event4", d, tomorrow, "Indy3", "StepsForever3", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event5", d, tomorrow, "Indy4", "StepsForever4", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event6", d, tomorrow, "Indy5", "StepsForever5", "Community"));
 	}
+
 
 	@ApiOperation(value = "Returns a list of all Events")
 	@RequestMapping(path = "/api/getAllEvents", method = RequestMethod.GET)

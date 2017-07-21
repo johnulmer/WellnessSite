@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
 
@@ -31,16 +33,12 @@ public class WellnessEvent implements Serializable {
 	private String eventName;
 	private String location;
 	private String description;
-
-	private String type;
 //    @OneToOne
 //	private Medallion medallion;
-
-
 	private String eventType;
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") 
 	private LocalDate startDate;
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") 
 	private LocalDate endDate;
 	
 
