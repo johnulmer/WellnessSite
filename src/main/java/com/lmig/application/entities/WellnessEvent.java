@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -30,12 +31,19 @@ public class WellnessEvent implements Serializable {
 	private String eventName;
 	private String location;
 	private String description;
+
+	private String type;
+//    @OneToOne
+//	private Medallion medallion;
+
+
 	private String eventType;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate startDate;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;
 	
+
 	@JoinTable(name = "wellnessevent_member", joinColumns = @JoinColumn(name = "wellnessevent_id") , 
 			inverseJoinColumns = @JoinColumn(name = "member_id") )
     @ManyToMany(fetch = FetchType.EAGER)
@@ -120,6 +128,12 @@ public class WellnessEvent implements Serializable {
 	public void setEventType(String eventType) {
 		this.eventType = eventType;
 	}
+//	public Medallion getMedallion() {
+//		return medallion;
+//	}
+//	public void setMedallion(Medallion medallion) {
+//		this.medallion = medallion;
+//	}
 
 
 //	public void merge(WellnessEvent other) {
