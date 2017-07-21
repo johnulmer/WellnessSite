@@ -2,6 +2,7 @@ package com.lmig.application.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,9 +32,9 @@ public class WellnessEvent implements Serializable {
 	private String description;
 	private String eventType;
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private String startDate;
+	private LocalDate startDate;
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private String endDate;
+	private LocalDate endDate;
 	
 	@JoinTable(name = "wellnessevent_member", joinColumns = @JoinColumn(name = "wellnessevent_id") , 
 			inverseJoinColumns = @JoinColumn(name = "member_id") )
@@ -54,7 +55,7 @@ public class WellnessEvent implements Serializable {
 
 	}
 
-	public WellnessEvent(String eventName, String startDate, String endDate, String location, String description,
+	public WellnessEvent(String eventName, LocalDate startDate, LocalDate endDate, String location, String description,
 		 String eventType) {
 		super();
 		this.eventName = eventName;
@@ -80,19 +81,19 @@ public class WellnessEvent implements Serializable {
 		this.eventName = eventName;
 	}
 
-	public String getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 

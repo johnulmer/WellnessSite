@@ -38,7 +38,7 @@ public class WellnessEventController implements Controller {
 
 
 	// returns event by name
-	@RequestMapping(path = "/api/event/{eventName}", method = RequestMethod.GET)
+	@RequestMapping(path = "/api/eventbyname/{eventName}", method = RequestMethod.GET)
 	@ApiOperation(value = "Get Event by Name", notes = "Returns event object matching name")
 	public ResponseEntity<List<WellnessEvent>> findByEventName(
 			@PathVariable(name = "eventName", required = true) String eventName) {
@@ -48,6 +48,12 @@ public class WellnessEventController implements Controller {
 		List<WellnessEvent> gevent = wellnessEventRepo.findByEventName(eventName);
 		return new ResponseEntity<List<WellnessEvent>>(gevent, HttpStatus.OK);
 
+	}
+	
+	@ApiOperation(value = "Returns event matching ID", notes = "requires path variable ID")
+	@RequestMapping(path = "/api/eventbyid/{id}", method = RequestMethod.GET)
+	public WellnessEvent getEventByID(@PathVariable Integer id) {
+		return wellnessEventRepo.getOne(id);
 	}
 
 	@RequestMapping(path = "/api/add/event", method = RequestMethod.POST)
@@ -76,7 +82,7 @@ public class WellnessEventController implements Controller {
 		return new ResponseEntity<String>("Event deleted", HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "/api/update/{id}", method = RequestMethod.PUT)
+	@RequestMapping(path = "/api/update/event/{id}", method = RequestMethod.PUT)
 	@ApiOperation(value = "Update Event", notes = "Update existing event by ID")
 	public WellnessEvent updateEvent(@PathVariable Integer id, @RequestBody WellnessEvent updatingEvent) {
 		WellnessEvent e = wellnessEventRepo.getOne(id);
