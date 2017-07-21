@@ -1,9 +1,12 @@
 package com.lmig.application.restControllers;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,11 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
+import com.lmig.application.entities.Member;
 import com.lmig.application.entities.WellnessEvent;
 import com.lmig.application.repositories.WellnessEventRepo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
 
 @RestController
 @Api(value = "Wellness Events")
@@ -35,76 +40,90 @@ public class WellnessEventController implements Controller {
 	// returns event by name
 	@RequestMapping(path = "/api/event/{eventName}", method = RequestMethod.GET)
 	@ApiOperation(value = "Get Event by Name", notes = "Returns event object matching name")
-	public ResponseEntity<List<WellnessEvent>> findByeventName(
+	public ResponseEntity<List<WellnessEvent>> findByEventName(
 			@PathVariable(name = "eventName", required = true) String eventName) {
-		System.out.println("/api/event/{eventName} is " + eventName);
 		if (eventName == "") {
 			return new ResponseEntity<List<WellnessEvent>>(HttpStatus.BAD_REQUEST);
 		}
-		List<WellnessEvent> event = wellnessEventRepo.findByEventLike(eventName);
-		System.out.println("Size of Events" + event.size());
-		return new ResponseEntity<List<WellnessEvent>>(event, HttpStatus.OK);
+		List<WellnessEvent> gevent = wellnessEventRepo.findByEventName(eventName);
+		return new ResponseEntity<List<WellnessEvent>>(gevent, HttpStatus.OK);
 
 	}
 
-	@RequestMapping(path = "/api/event", method = RequestMethod.POST)
-	@ApiOperation(value = "Add an Event", notes = "adds a new event - event name must be in request body and must not already\n"
-			+ " exist")
-	public ResponseEntity<WellnessEvent> createEvent(@RequestBody WellnessEvent e) {
-		System.out.println("/api/event POST " + e.getEventName());
-		if (e.getEventName() == null) {
-			return new ResponseEntity<WellnessEvent>(HttpStatus.BAD_REQUEST);
-		}
-		if (wellnessEventRepo.findByEventLike(e.getEventName()) != null) {
-			return new ResponseEntity<WellnessEvent>(HttpStatus.CONFLICT);
-		}
-
-		wellnessEventRepo.save(e);
-		return new ResponseEntity<WellnessEvent>(e, HttpStatus.CREATED);
+	@RequestMapping(path = "/api/add/event", method = RequestMethod.POST)
+	@ApiOperation(value = "Add an Event", notes = "adds a new event - event name must be in request body and must not already")
+	public ResponseEntity<WellnessEvent> createWellnessEvent(@RequestBody WellnessEvent eventBody) {
+//		if (e.getEventName() == null) {
+//			return new ResponseEntity<WellnessEvent>(HttpStatus.BAD_REQUEST);
+//		}
+//		if (wellnessEventRepo.findByEventName(e.getEventName()) != null) {
+//			return new ResponseEntity<WellnessEvent>(HttpStatus.CONFLICT);
+//		}
+		wellnessEventRepo.save(eventBody);
+		return new ResponseEntity<WellnessEvent>(eventBody, HttpStatus.CREATED);
 	}
+	
 
-	@RequestMapping(path = "/api/event/{id}", method = RequestMethod.DELETE)
+
+	@RequestMapping(path = "/api/delete/event/{id}", method = RequestMethod.DELETE)
 	@ApiOperation(value = "Delete Event", notes = "Deletes an existing event whose ID matches parameter in URL")
 	public ResponseEntity<String> deleteEvent(@PathVariable(name = "id", required = true) Integer id) {
 		System.out.println("/api/event/{id} DELETE " + id);
 		if (id == null) {
-			return new ResponseEntity<String>("", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("Cannot delete", HttpStatus.BAD_REQUEST);
 		}
 		wellnessEventRepo.delete(id);
 		return new ResponseEntity<String>("Event deleted", HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "/api/event", method = RequestMethod.PUT)
-	@ApiOperation(value = "Updated event", notes = "Update/merge for an existing event whose ID matches \"id\" in json body of\n"
-			+ " request\n")
-	public ResponseEntity<WellnessEvent> updatePerson(@RequestBody WellnessEvent e) {
-		System.out.println("/api/event PUT ");
-		if (e.getId() == 0) {
-			return new ResponseEntity<WellnessEvent>(HttpStatus.BAD_REQUEST);
+	@RequestMapping(path = "/api/update/{id}", method = RequestMethod.PUT)
+	@ApiOperation(value = "Update Event", notes = "Update existing event by ID")
+	public WellnessEvent updateEvent(@PathVariable Integer id, @RequestBody WellnessEvent updatingEvent) {
+		WellnessEvent e = wellnessEventRepo.getOne(id);
+		if (updatingEvent.getEventName() != null) {
+			e.setEventName(updatingEvent.getEventName());
 		}
-		WellnessEvent existing = wellnessEventRepo.findOne(e.getId());
-		existing.merge(e);
-		wellnessEventRepo.save(existing);
-		return new ResponseEntity<WellnessEvent>(e, HttpStatus.OK);
+		if (updatingEvent.getDescription()!= null){
+			e.setDescription(updatingEvent.getDescription());
+		}
+		if (updatingEvent.getEndDate() !=null) {
+			e.setEndDate(updatingEvent.getEndDate());
+		}
+		if (updatingEvent.getStartDate() != null) {
+			e.setStartDate(updatingEvent.getStartDate());
+		}
+		if (updatingEvent.getLocation() != null) {
+			e.setLocation(updatingEvent.getLocation());
+		}
+		if (updatingEvent.getEventType() != null) {
+			e.setEventType(updatingEvent.getEventType());
+		}
+			wellnessEventRepo.save(e);
+			return e;
 	}
+	
+	
 
+	
+	
 	@RequestMapping(path = "/api/resetWellnessEvent", method = RequestMethod.GET)
 	public void resetWellnessEvent() {
-		wellnessEventRepo.save(new WellnessEvent("Event1", "Date1", "Date2", "Indy", "StepsForever", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event2", "Date2", "Date3", "Indy1", "StepsForever1", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event3", "Date3", "Date4", "Indy2", "StepsForever2", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event4", "Date4", "Date5", "Indy3", "StepsForever3", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event5", "Date5", "Date6", "Indy4", "StepsForever4", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event6", "Date6", "Date7", "Indy5", "StepsForever5", "Community"));
+		
+		wellnessEventRepo.save(new WellnessEvent("Event1", null, null, "Indy", "StepsForever", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event2", null, null, "Indy1", "StepsForever1", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event3", null, null, "Indy2", "StepsForever2", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event4", null, null, "Indy3", "StepsForever3", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event5", null, null, "Indy4", "StepsForever4", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event6", null, null, "Indy5", "StepsForever5", "Community"));
 	}
 
 	@ApiOperation(value = "Returns a list of all Events")
 	@RequestMapping(path = "/api/getAllEvents", method = RequestMethod.GET)
 	public List<WellnessEvent> getAllEvents() {
-		//System.out.println("I am here");
 		List<WellnessEvent> wellnessEvent = wellnessEventRepo.findAll();
 		return wellnessEvent;
 	}
+	
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {

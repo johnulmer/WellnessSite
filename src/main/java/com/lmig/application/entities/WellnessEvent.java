@@ -1,8 +1,8 @@
 package com.lmig.application.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 
 @Entity
 @Table(name = "wellnessevent")
@@ -22,13 +25,16 @@ public class WellnessEvent implements Serializable {
 	@GeneratedValue
 	private int id;
 
+	//@NotNull  uncomment for not null constraint
 	private String eventName;
-	private String startDate;
-	private String endDate;
 	private String location;
 	private String description;
-	private String type;
-
+	private String eventType;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private String startDate;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private String endDate;
+	
 	@JoinTable(name = "wellnessevent_member", joinColumns = @JoinColumn(name = "wellnessevent_id") , 
 			inverseJoinColumns = @JoinColumn(name = "member_id") )
     @ManyToMany(fetch = FetchType.EAGER)
@@ -49,14 +55,14 @@ public class WellnessEvent implements Serializable {
 	}
 
 	public WellnessEvent(String eventName, String startDate, String endDate, String location, String description,
-			String type) {
+		 String eventType) {
 		super();
 		this.eventName = eventName;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.location = location;
 		this.description = description;
-		this.type = type;
+		this.eventType = eventType;
 	}
 
 	public int getId() {
@@ -106,33 +112,34 @@ public class WellnessEvent implements Serializable {
 		this.description = description;
 	}
 
-	public String getType() {
-		return type;
+
+	public String getEventType() {
+		return eventType;
+	}
+	public void setEventType(String eventType) {
+		this.eventType = eventType;
 	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
 
-	public void merge(WellnessEvent other) {
-		if (other.eventName != null) {
-			this.eventName = other.eventName;
-		}
-		if (other.type != null) {
-			this.type = other.type;
-		}
-		if (other.description != null) {
-			this.description = other.description;
-		}
-		if (other.location != null) {
-			this.location = other.location;
-		}
-		if (other.startDate != null) {
-			this.startDate = other.startDate;
-		}
-		if (other.endDate != null) {
-			this.endDate = other.endDate;
-		}
-	}
+//	public void merge(WellnessEvent other) {
+//		if (other.eventName != null) {
+//			this.eventName = other.eventName;
+//		}
+//		if (other.eventType != null) {
+//			this.eventType = other.eventType;
+//		}
+//		if (other.description != null) {
+//			this.description = other.description;
+//		}
+//		if (other.location != null) {
+//			this.location = other.location;
+//		}
+//		if (other.startDate != null) {
+//			this.startDate = other.startDate;
+//		}
+//		if (other.endDate != null) {
+//			this.endDate = other.endDate;
+//		}
+//	}
 
 }
