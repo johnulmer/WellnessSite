@@ -1,15 +1,10 @@
 package com.lmig.application.restControllers;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-import com.lmig.application.entities.Member;
 import com.lmig.application.entities.WellnessEvent;
 import com.lmig.application.repositories.WellnessEventRepo;
 
@@ -38,16 +32,11 @@ public class WellnessEventController implements Controller {
 
 
 	// returns event by name
+	@ApiOperation(value = "Returns event matching eventName", notes = "requires path variable eventName")
 	@RequestMapping(path = "/api/eventbyname/{eventName}", method = RequestMethod.GET)
-	@ApiOperation(value = "Get Event by Name", notes = "Returns event object matching name")
-	public ResponseEntity<List<WellnessEvent>> findByEventName(
-			@PathVariable(name = "eventName", required = true) String eventName) {
-		if (eventName == "") {
-			return new ResponseEntity<List<WellnessEvent>>(HttpStatus.BAD_REQUEST);
-		}
-		List<WellnessEvent> gevent = wellnessEventRepo.findByEventName(eventName);
-		return new ResponseEntity<List<WellnessEvent>>(gevent, HttpStatus.OK);
-
+	public WellnessEvent findByEventName(@PathVariable(name = "eventName", required = true) String eventName)  {
+		WellnessEvent e = wellnessEventRepo.findByEventName(eventName);
+		return e;
 	}
 	
 	@ApiOperation(value = "Returns event matching ID", notes = "requires path variable ID")
