@@ -41,7 +41,8 @@ public class WellnessEventMemberJSONController {
 	    Member addingMember = memberRepository.findOne(memberID); 
 		for (WellnessEvent we : eventList) {
 		    WellnessEvent weAdding = wellnessEventRepository.findOne(we.getId());
-			weAdding.addMember(addingMember);  
+			weAdding.addMember(addingMember);
+//			addingMember.addMedallion(weAdding.getMedallion());
 			wellnessEventRepository.saveAndFlush(weAdding);
 		}
 	}
@@ -60,7 +61,8 @@ public class WellnessEventMemberJSONController {
 	    Member removingMember = memberRepository.findOne(memberID);
 		for (WellnessEvent we : eventList) {
 		    WellnessEvent weRemoving = wellnessEventRepository.findOne(we.getId());
-		    weRemoving.removeMember(removingMember);  
+		    weRemoving.removeMember(removingMember);
+//		    removingMember.removeMedallion(weRemoving.getMedallion());
 			wellnessEventRepository.saveAndFlush(weRemoving);
 		}
 	}
@@ -78,13 +80,6 @@ public class WellnessEventMemberJSONController {
 	public Set<WellnessEvent> registeredEvents(@PathVariable Integer memberID) {
 	    Member m = memberRepository.findOne(memberID);
 	    Set<WellnessEvent> eventList = m.getWellnessEvents();
-	    //eventList = memberRepository.findRegisteredEvents(memberID);
-	    //@RequestBody Set<WellnessEvent> eventList
-//		for (WellnessEvent we : eventList) {
-//		    WellnessEvent weRemoving = wellnessEventRepository.findOne(we.getId());
-//		    weRemoving.removeMember(removingMember);  
-//			wellnessEventRepository.saveAndFlush(weRemoving);
-//		}
 		return eventList;
 	}
 	

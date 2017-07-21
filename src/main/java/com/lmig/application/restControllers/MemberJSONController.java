@@ -1,6 +1,8 @@
 package com.lmig.application.restControllers;
 
 import java.util.List;
+import java.util.Set;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lmig.application.entities.Medallion;
 import com.lmig.application.entities.Member;
+import com.lmig.application.repositories.MedallionRepository;
 import com.lmig.application.repositories.MemberRepository;
 
 import io.swagger.annotations.Api;
@@ -18,10 +22,11 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(value = "Members", description = "JSON operations pertaining to WellnessSite Members")
 public class MemberJSONController {
-
-
-	@Autowired
-	private MemberRepository memberRepository;
+	
+@Autowired
+private MemberRepository memberRepository;
+@Autowired
+private MedallionRepository medallionRepository;
 
 /**
  * Accepts a JSON Member object with email, password, screenName set & default values for active and admin. 
@@ -32,7 +37,7 @@ public class MemberJSONController {
  * @see                Member
  */
 @ApiOperation(value = "Adds a new member")
-	@RequestMapping(path = "/member/", method = RequestMethod.POST)
+	@RequestMapping(path = "/api/member", method = RequestMethod.POST)
 public Member addMember(@RequestBody @Valid Member addingMember) {
 	addingMember.setActive(true);
 	addingMember.setAdmin(false);
@@ -162,13 +167,6 @@ public Member addMember(@RequestBody @Valid Member addingMember) {
  * @see                 Member
  */
 
-	@ApiOperation(value = "Find members based on email or screenName")
-	@RequestMapping(path = "/findMember", method = RequestMethod.GET)
-	public List<Member> findMemberBySearch(String screenName, String email) {
-		// http://localhost:8080/findMember?screenName=john&email=blah
-		List<Member> memberList = memberRepository.findMemberBySearch(screenName, email);
-		return memberList;
-	}
 	/// **
 	// * Given an email & password, authenticate user.
 	// *
@@ -184,13 +182,48 @@ public Member addMember(@RequestBody @Valid Member addingMember) {
 	// return returnMember;
 	// }
 
-	@RequestMapping(path = "/api/resetMemberTable", method = RequestMethod.GET)
-	public void resetMemberTable() {
-		memberRepository.save(new Member("john1", "john1@blah.com", "pwd", true, true));
-		memberRepository.save(new Member("john2", "john2@blah.com", "pwd", true, false));
-		memberRepository.save(new Member("john3", "john3@blah.com", "pwd", true, true));
-		memberRepository.save(new Member("john4", "john4@blah.com", "pwd", true, true));
-		memberRepository.save(new Member("john5", "john5@blah.com", "pwd", true, false));
-		memberRepository.save(new Member("john6", "john6@blah.com", "pwd", true, false));
-	}
+
+@ApiOperation(value = "Find members based on email or screenName")
+@RequestMapping(path = "/api/findMember", method = RequestMethod.GET)
+public List<Member> findMemberBySearch(String screenName, String email) {
+	// http://localhost:8080/findMember?screenName=john&email=blah
+	List<Member> memberList = memberRepository.findMemberBySearch(screenName, email);
+	return memberList;
+}
+
+//@ApiOperation(value = "Find members based on email or screenName")
+//@RequestMapping(path = "/api/getMemberBadges", method = RequestMethod.POST)
+//public Set<Medallion> getMemberBadges(@RequestBody Member member) {
+//	//Member badgeMember = memberRepository.getOne(member.getId());
+//	Member me = memberRepository.getOne(1);
+//	me.addMedallion(new Medallion("huzzah", "i love flair!"));
+//	me.addMedallion(new Medallion("what", "another one?"));
+//	me.addMedallion(new Medallion("true believer", "the truth is out there"));
+//	me.addMedallion(new Medallion("gump", "dear god, make me a bird, so I can fly far far away"));
+//	me.addMedallion(new Medallion("lenny", "because I get to feed da wabbits!"));
+//	Set<Medallion> medallionList = me.getMedallions();
+//	return medallionList;
+//}
+
+
+@RequestMapping(path = "/api/resetMemberTable", method = RequestMethod.GET)
+public void resetMemberTable() {
+//	Medallion joinerMedallion = medallionRepository.save(new Medallion("Wellness Site Member", "I am a Wellness Site Member!"));
+//	Member m1 = memberRepository.save(new Member("john1", "john1@blah.com", "pwd", true, true));
+//	System.out.println(joinerMedallion.getId() + joinerMedallion.getTitle() + joinerMedallion.getDescription());
+//	m1.addMedallion(joinerMedallion);
+	memberRepository.save(new Member("john1", "john1@blah.com", "pwd", true, true));
+	memberRepository.save(new Member("john2", "john2@blah.com", "pwd", true, false));
+	memberRepository.save(new Member("john3", "john3@blah.com", "pwd", true, true));
+	memberRepository.save(new Member("john4", "john4@blah.com", "pwd", true, true));
+	memberRepository.save(new Member("john5", "john5@blah.com", "pwd", true, false));
+	memberRepository.save(new Member("john6", "john6@blah.com", "pwd", true, false));
+//	Member me = memberRepository.getOne(1);
+//	me.addMedallion(new Medallion("huzzah", "i love flair!"));
+//	me.addMedallion(new Medallion("what", "another one?"));
+//	me.addMedallion(new Medallion("true believer", "the truth is out there"));
+//	me.addMedallion(new Medallion("gump", "dear god, make me a bird, so I can fly far far away"));
+//	me.addMedallion(new Medallion("lenny", "because I get to feed da wabbits!"));
+}
+
 }
