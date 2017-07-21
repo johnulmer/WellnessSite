@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,6 +29,8 @@ public class WellnessEvent implements Serializable {
 	private String location;
 	private String description;
 	private String type;
+//    @OneToOne
+//	private Medallion medallion;
 
 	@JoinTable(name = "wellnessevent_member", joinColumns = @JoinColumn(name = "wellnessevent_id") , 
 			inverseJoinColumns = @JoinColumn(name = "member_id") )
@@ -134,5 +137,11 @@ public class WellnessEvent implements Serializable {
 			this.endDate = other.endDate;
 		}
 	}
+//	public Medallion getMedallion() {
+//		return medallion;
+//	}
+//	public void setMedallion(Medallion medallion) {
+//		this.medallion = medallion;
+//	}
 
 }

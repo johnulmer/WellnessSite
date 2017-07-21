@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -21,10 +23,16 @@ public class Team {
 	@GeneratedValue
 	private int id;
 	
+	public int getId() {
+		return id;
+	}
 	private String teamName;
 	private String description;
 	private boolean active;
 	private boolean publishable;
+//    @OneToOne
+//	private Medallion medallion;
+
 
 	@JoinTable(name = "wellnessevent_member", joinColumns = @JoinColumn(name = "wellnessevent_id") , 
 			inverseJoinColumns = @JoinColumn(name = "member_id") )
@@ -78,4 +86,10 @@ public class Team {
 	public void setPublishable(boolean publishable) {
 		this.publishable = publishable;
 	}
+//	public Medallion getMedallion() {
+//		return medallion;
+//	}
+//	public void setMedallion(Medallion medallion) {
+//		this.medallion = medallion;
+//	}
 }

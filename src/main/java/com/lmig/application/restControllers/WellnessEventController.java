@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-import com.lmig.application.entities.Medallion;
 import com.lmig.application.entities.WellnessEvent;
 import com.lmig.application.repositories.WellnessEventRepo;
 
@@ -61,7 +60,6 @@ public class WellnessEventController implements Controller {
 		}
 
 		wellnessEventRepo.save(e);
-		Medallion eventMedallion = new Medallion("test", "test");
 		return new ResponseEntity<WellnessEvent>(e, HttpStatus.CREATED);
 	}
 

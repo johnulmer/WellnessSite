@@ -22,11 +22,10 @@ public class Medallion {
 	private String title;
 	private String description;
 	private boolean active;
-	private WellnessEvent wellnessEvent;
 
 	public Medallion(String title, String description) {
 		this.title = title;
-		this.description = title;
+		this.description = description;
 	}
 	
 	public String getTitle() {
@@ -47,12 +46,18 @@ public class Medallion {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	public WellnessEvent getWellnessEvent() {
-		return wellnessEvent;
-	}
-	public void setWellnessEvent(WellnessEvent wellnessEvent) {
-		this.wellnessEvent = wellnessEvent;
-	}
+//	public WellnessEvent getWellnessEvent() {
+//		return wellnessEvent;
+//	}
+//	public void setWellnessEvent(WellnessEvent wellnessEvent) {
+//		this.wellnessEvent = wellnessEvent;
+//	}
+//	public Team getTeam() {
+//		return team;
+//	}
+//	public void setTeam(Team team) {
+//		this.team = team;
+//	}
 	public int getId() {
 		return id;
 	}

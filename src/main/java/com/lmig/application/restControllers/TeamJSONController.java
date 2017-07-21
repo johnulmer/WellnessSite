@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lmig.application.entities.Medallion;
 import com.lmig.application.entities.Member;
 import com.lmig.application.entities.Team;
 import com.lmig.application.entities.WellnessEvent;
+import com.lmig.application.repositories.MedallionRepository;
 import com.lmig.application.repositories.TeamRepository;
 
 import io.swagger.annotations.Api;
@@ -25,6 +27,8 @@ public class TeamJSONController {
 		
 	@Autowired
 	private TeamRepository teamRepository;
+	@Autowired
+	private MedallionRepository medallionRepository;
 	
 	/**
 	 * Accepts a JSON Team object with teamName and description set, defaults to active = true. 
@@ -35,10 +39,13 @@ public class TeamJSONController {
 	 * @see                Team
 	 */
 	@ApiOperation(value = "Adds a new team")
-	@RequestMapping(path = "/team/", method = RequestMethod.POST)
+	@RequestMapping(path = "/api/team", method = RequestMethod.POST)
 	public Team addTeam(@RequestBody @Valid Team addingTeam) {
 		addingTeam.setActive(true);
 		addingTeam.setPublishable(true);
+//		Medallion medallion = new Medallion(addingTeam.getTeamName(), addingTeam.getDescription());
+//		medallionRepository.save(medallion);
+//		addingTeam.setMedallion(medallion);
 		Team returnedTeam = teamRepository.save(addingTeam);
 		return returnedTeam;
 	}

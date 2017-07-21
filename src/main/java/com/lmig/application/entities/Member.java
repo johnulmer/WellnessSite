@@ -40,9 +40,9 @@ public class Member {
 	@JsonBackReference
 	private Set<WellnessEvent> wellnessEvents;
 
-    @OneToMany
-	private Set<Medallion> medallions;
-	
+//    @OneToMany
+//	private Set<Medallion> medallions;
+
 	public Set<WellnessEvent> getWellnessEvents() {
 		return wellnessEvents;
 	}
@@ -66,15 +66,18 @@ public class Member {
 		this.password = password;
 		this.active = active;
 		this.admin = admin;
-		this.medallions.add(medallion);
+	//	this.medallions.add(medallion);
 	}
 	
-	public void addMedallion(Medallion medallion) {
-		this.medallions.add(medallion);
-	}
-	public void removeMedallion(Medallion medallion) {
-		this.medallions.remove(medallion);
-	}	
+//	public void addMedallion(Medallion medallion) {
+//		this.medallions.add(medallion);
+//	}
+//	public void removeMedallion(Medallion medallion) {
+//		this.medallions.remove(medallion);
+//	}	
+//	public Set<Medallion> getMedallions() {
+//		return medallions;
+//	}
 	public int getId() {
 		return id;
 	}
