@@ -3,6 +3,7 @@ package com.lmig.application.entities;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,7 +32,9 @@ public class Member {
 	
 
 	@NotNull
+	//@Column(unique = true) uncomment for unique string name
 	private String screenName;
+	//@Column(unique = true) uncomment for unique email
 	private String email;
 	private String password;
 	private boolean active;

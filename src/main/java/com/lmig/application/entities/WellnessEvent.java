@@ -1,8 +1,9 @@
 package com.lmig.application.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+
 
 @Entity
 @Table(name = "wellnessevent")
@@ -23,14 +27,22 @@ public class WellnessEvent implements Serializable {
 	@GeneratedValue
 	private int id;
 
+	//@NotNull  uncomment for not null constraint
 	private String eventName;
-	private String startDate;
-	private String endDate;
 	private String location;
 	private String description;
+
 	private String type;
 //    @OneToOne
 //	private Medallion medallion;
+
+
+	private String eventType;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate startDate;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate endDate;
+	
 
 	@JoinTable(name = "wellnessevent_member", joinColumns = @JoinColumn(name = "wellnessevent_id") , 
 			inverseJoinColumns = @JoinColumn(name = "member_id") )
@@ -51,15 +63,15 @@ public class WellnessEvent implements Serializable {
 
 	}
 
-	public WellnessEvent(String eventName, String startDate, String endDate, String location, String description,
-			String type) {
+	public WellnessEvent(String eventName, LocalDate startDate, LocalDate endDate, String location, String description,
+		 String eventType) {
 		super();
 		this.eventName = eventName;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.location = location;
 		this.description = description;
-		this.type = type;
+		this.eventType = eventType;
 	}
 
 	public int getId() {
@@ -77,19 +89,19 @@ public class WellnessEvent implements Serializable {
 		this.eventName = eventName;
 	}
 
-	public String getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 
@@ -109,39 +121,40 @@ public class WellnessEvent implements Serializable {
 		this.description = description;
 	}
 
-	public String getType() {
-		return type;
-	}
 
-	public void setType(String type) {
-		this.type = type;
+	public String getEventType() {
+		return eventType;
 	}
-
-	public void merge(WellnessEvent other) {
-		if (other.eventName != null) {
-			this.eventName = other.eventName;
-		}
-		if (other.type != null) {
-			this.type = other.type;
-		}
-		if (other.description != null) {
-			this.description = other.description;
-		}
-		if (other.location != null) {
-			this.location = other.location;
-		}
-		if (other.startDate != null) {
-			this.startDate = other.startDate;
-		}
-		if (other.endDate != null) {
-			this.endDate = other.endDate;
-		}
+	public void setEventType(String eventType) {
+		this.eventType = eventType;
 	}
 //	public Medallion getMedallion() {
 //		return medallion;
 //	}
 //	public void setMedallion(Medallion medallion) {
 //		this.medallion = medallion;
+//	}
+
+
+//	public void merge(WellnessEvent other) {
+//		if (other.eventName != null) {
+//			this.eventName = other.eventName;
+//		}
+//		if (other.eventType != null) {
+//			this.eventType = other.eventType;
+//		}
+//		if (other.description != null) {
+//			this.description = other.description;
+//		}
+//		if (other.location != null) {
+//			this.location = other.location;
+//		}
+//		if (other.startDate != null) {
+//			this.startDate = other.startDate;
+//		}
+//		if (other.endDate != null) {
+//			this.endDate = other.endDate;
+//		}
 //	}
 
 }

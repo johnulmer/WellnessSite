@@ -36,7 +36,7 @@ private MedallionRepository medallionRepository;
  * @return             returnedMember with ID set
  * @see                Member
  */
-@ApiOperation(value = "Adds a new member")
+@ApiOperation(value = "Adds a new member requires JSON object")
 	@RequestMapping(path = "/api/member", method = RequestMethod.POST)
 public Member addMember(@RequestBody @Valid Member addingMember) {
 	addingMember.setActive(true);
@@ -77,7 +77,7 @@ public Member addMember(@RequestBody @Valid Member addingMember) {
 	 * @return Member - a Member matching a specific ID.
 	 * @see Member
 	 */
-	@ApiOperation(value = "Returns Member matching ID")
+	@ApiOperation(value = "Returns Member matching ID, requires path variable ID")
 	@RequestMapping(path = "/api/member/{id}", method = RequestMethod.GET)
 	public Member getMemberByID(@PathVariable Integer id) {
 		return memberRepository.getOne(id);
@@ -157,16 +157,6 @@ public Member addMember(@RequestBody @Valid Member addingMember) {
 		return m;
 	}
 
-
-/**
- * Given a screenName or email, find Members that match.
- *
- * @param email         A String that could be part or all of an email.
- * @param screenName    A String that could be part or all of a screenName.
- * @return              memberList a list of matching members
- * @see                 Member
- */
-
 	/// **
 	// * Given an email & password, authenticate user.
 	// *
@@ -181,8 +171,15 @@ public Member addMember(@RequestBody @Valid Member addingMember) {
 	// Member returnMember = memberRepository.authenticateMember(m);
 	// return returnMember;
 	// }
-
-
+	
+/**
+ * Given a screenName or email, find Members that match.
+ *
+ * @param email         A String that could be part or all of an email.
+ * @param screenName    A String that could be part or all of a screenName.
+ * @return              memberList a list of matching members
+ * @see                 Member
+ */
 @ApiOperation(value = "Find members based on email or screenName")
 @RequestMapping(path = "/api/findMember", method = RequestMethod.GET)
 public List<Member> findMemberBySearch(String screenName, String email) {

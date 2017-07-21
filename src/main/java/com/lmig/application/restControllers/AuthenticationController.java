@@ -17,10 +17,10 @@ public class AuthenticationController {
 	private MemberRepository memberRepository;
 
 	@RequestMapping(path = "/open/login", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<Member> login(@RequestParam String email, @RequestParam String password) throws Throwable {
-		Member returnedMember = memberRepository.findByEmailAndPassword(email, password);
+	public ResponseEntity<Member> login(@RequestBody Member l) throws Throwable {
+		Member returnedMember = memberRepository.findByEmailAndPassword(l.getEmail(),l.getPassword());
 		if (returnedMember != null) {
-			TokenGenerator.genToken();
+			//TokenGenerator.genToken();
 			return new ResponseEntity<Member>(returnedMember, HttpStatus.OK);
 		} else {
 		  return new ResponseEntity<Member>(HttpStatus.NOT_FOUND);

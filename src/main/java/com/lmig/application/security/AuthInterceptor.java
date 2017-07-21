@@ -18,18 +18,18 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        boolean authorized = false;
+        boolean authorized = true;  //needs to be set to false and below needs to be uncommented for security key
 
         // they better have included a valid token
-        String key = httpServletRequest.getHeader("x-authorization-key");
-        if (key != null) {
-            authorized = TokenGenerator.isValidKey(key);
-            httpServletResponse.setStatus(HttpStatus.OK.value());
-        }
-
-        if(!authorized){
-            httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-        }
+//        String key = httpServletRequest.getHeader("x-authorization-key");
+//        if (key != null) {
+//            authorized = TokenGenerator.isValidKey(key);
+//            httpServletResponse.setStatus(HttpStatus.OK.value());
+//        }
+//
+//        if(!authorized){
+//            httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+//        }
 
         return authorized;
     }
