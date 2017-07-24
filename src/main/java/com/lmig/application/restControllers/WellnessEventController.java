@@ -3,6 +3,9 @@ package com.lmig.application.restControllers;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,6 +76,18 @@ public class WellnessEventController implements Controller {
 		wellnessEventRepo.delete(id);
 		return new ResponseEntity<String>("Event deleted", HttpStatus.OK);
 	}
+	
+//	@RequestMapping(path= "api/event/search/{startDate}", method = RequestMethod.GET)
+//	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
+//	public List<WellnessEvent> searchByStartDate(@PathVariable(name = "startDate", required = true) String startDate) {
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        LocalDate weekBeginDate= LocalDate.parse(startDate,formatter);
+//        
+//		return wellnessEventRepo.search(startDate);
+//		
+//		
+//		
+//	}
 
 	@RequestMapping(path = "/api/update/event/{id}", method = RequestMethod.PUT)
 	@ApiOperation(value = "Update Event", notes = "Update existing event by ID")
@@ -106,14 +121,17 @@ public class WellnessEventController implements Controller {
 	
 	@RequestMapping(path = "/api/resetWellnessEvent", method = RequestMethod.GET)
 	public void resetWellnessEvent() {
+		LocalDate d = LocalDate.now();
+		LocalDate tomorrow = d.plus(1, ChronoUnit.DAYS);
 		
-		wellnessEventRepo.save(new WellnessEvent("Event1", null, null, "Indy", "StepsForever", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event2", null, null, "Indy1", "StepsForever1", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event3", null, null, "Indy2", "StepsForever2", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event4", null, null, "Indy3", "StepsForever3", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event5", null, null, "Indy4", "StepsForever4", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event6", null, null, "Indy5", "StepsForever5", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event1", d, tomorrow, "Indy", "StepsForever", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event2", d, tomorrow, "Indy1", "StepsForever1", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event3", d, tomorrow, "Indy2", "StepsForever2", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event4", d, tomorrow, "Indy3", "StepsForever3", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event5", d, tomorrow, "Indy4", "StepsForever4", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event6", d, tomorrow, "Indy5", "StepsForever5", "Community"));
 	}
+
 
 	@ApiOperation(value = "Returns a list of all Events")
 	@RequestMapping(path = "/api/getAllEvents", method = RequestMethod.GET)
