@@ -14,7 +14,7 @@ public class DataLoader {
     @Autowired
     public DataLoader(MemberRepository userRepository) {
         this.memberRepository = userRepository;
-        LoadUsers();
+        //LoadUsers();
     }
 
     private void LoadUsers() {

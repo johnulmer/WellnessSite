@@ -112,9 +112,9 @@ public Member addMember(@RequestBody @Valid Member addingMember) {
 			m.setActive(false);
 		}
 		if (updatingMember.isAdmin()) {
-			m.setActive(true);
+			m.setAdmin(true);
 		} else if (!(updatingMember.isAdmin())) {
-			m.setActive(false);
+			m.setAdmin(false);
 		}
 		memberRepository.save(m);
 		return m;

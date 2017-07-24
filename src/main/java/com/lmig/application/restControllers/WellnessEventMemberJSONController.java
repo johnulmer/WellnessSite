@@ -36,7 +36,7 @@ public class WellnessEventMemberJSONController {
 	 * @see             WellnessEvent
 	 */
 	@ApiOperation(value = "Adds a Member to a set of WellnessEvents")
-	@RequestMapping(path = "/api/addMemberToEvent/{memberID}", method = RequestMethod.PUT)
+	@RequestMapping(path = "/api/addMemberToEvents/{memberID}", method = RequestMethod.PUT)
 	public void addMemberToEvents(@PathVariable Integer memberID, @RequestBody Set<WellnessEvent> eventList) {
 	    Member addingMember = memberRepository.findOne(memberID); 
 		for (WellnessEvent we : eventList) {
@@ -47,6 +47,34 @@ public class WellnessEventMemberJSONController {
 		}
 	}
 
+	/**
+	 * Given a Member and two lists of WellnessEvents, add the member to each WellnessEvent in the add list 
+	 * and remove the member from each WellnessEvent in the remove list. 
+	 *
+	 * @param addEventList    A list of WellnessEvents to add a Member to.
+	 * @param removeEventList A list of WellnessEvents to remove a Member from.
+	 * @param memberID        A valid int Member ID
+	 * @see                   Member
+	 * @see                   WellnessEvent
+	 */
+	@ApiOperation(value = "Updates the WellnessEvents for a Member (must pass two lists for add and remove")
+	@RequestMapping(path = "/api/updateMemberEvents", method = RequestMethod.PUT)
+	public void updateMemberEvents(@PathVariable Integer memberID, 
+			@RequestBody Set<WellnessEvent> addEventList, 
+			@RequestBody Set<WellnessEvent> removeEventList) {
+	    Member updatingMember = memberRepository.findOne(memberID); 
+		for (WellnessEvent we : addEventList) {
+		    WellnessEvent weAdding = wellnessEventRepository.findOne(we.getId());
+			weAdding.addMember(updatingMember);
+			wellnessEventRepository.saveAndFlush(weAdding);
+		}
+		for (WellnessEvent we : removeEventList) {
+		    WellnessEvent weRemoving = wellnessEventRepository.findOne(we.getId());
+		    weRemoving.addMember(updatingMember);
+			wellnessEventRepository.saveAndFlush(weRemoving);
+		}
+	}
+	
 	/**
 	 * Given a Member and a list of WellnessEvents, remove the member from each event. 
 	 *
