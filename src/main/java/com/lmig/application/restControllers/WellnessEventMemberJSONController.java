@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lmig.application.entities.Member;
 import com.lmig.application.entities.WellnessEvent;
+import com.lmig.application.jsonResponses.MemberRegistrationUpdate;
 import com.lmig.application.repositories.MemberRepository;
 import com.lmig.application.repositories.WellnessEventRepo;
 
@@ -42,7 +43,6 @@ public class WellnessEventMemberJSONController {
 		for (WellnessEvent we : eventList) {
 		    WellnessEvent weAdding = wellnessEventRepository.findOne(we.getId());
 			weAdding.addMember(addingMember);
-//			addingMember.addMedallion(weAdding.getMedallion());
 			wellnessEventRepository.saveAndFlush(weAdding);
 		}
 	}
@@ -58,11 +58,12 @@ public class WellnessEventMemberJSONController {
 	 * @see                   WellnessEvent
 	 */
 	@ApiOperation(value = "Updates the WellnessEvents for a Member (must pass two lists for add and remove")
-	@RequestMapping(path = "/api/updateMemberEvents", method = RequestMethod.PUT)
+	@RequestMapping(path = "/api/updateMemberEvents/{memberID}", method = RequestMethod.PUT)
 	public void updateMemberEvents(@PathVariable Integer memberID, 
-			@RequestBody Set<WellnessEvent> addEventList, 
-			@RequestBody Set<WellnessEvent> removeEventList) {
+			@RequestBody MemberRegistrationUpdate memberRegistrationUpdate) {
 	    Member updatingMember = memberRepository.findOne(memberID); 
+	    Set<WellnessEvent> addEventList = memberRegistrationUpdate.addEventList;
+	    Set<WellnessEvent> removeEventList = memberRegistrationUpdate.removeEventList;
 		for (WellnessEvent we : addEventList) {
 		    WellnessEvent weAdding = wellnessEventRepository.findOne(we.getId());
 			weAdding.addMember(updatingMember);
@@ -70,7 +71,7 @@ public class WellnessEventMemberJSONController {
 		}
 		for (WellnessEvent we : removeEventList) {
 		    WellnessEvent weRemoving = wellnessEventRepository.findOne(we.getId());
-		    weRemoving.addMember(updatingMember);
+		    weRemoving.removeMember(updatingMember);
 			wellnessEventRepository.saveAndFlush(weRemoving);
 		}
 	}
