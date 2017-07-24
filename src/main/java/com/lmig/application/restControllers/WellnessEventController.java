@@ -1,6 +1,7 @@
 package com.lmig.application.restControllers;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -71,6 +72,18 @@ public class WellnessEventController implements Controller {
 		}
 		wellnessEventRepo.delete(id);
 		return new ResponseEntity<String>("Event deleted", HttpStatus.OK);
+	}
+	
+	@RequestMapping(path= "api/event/search/{startDate}", method = RequestMethod.GET)
+	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
+	public List<WellnessEvent> searchByStartDate(@PathVariable(name = "startDate", required = true) String startDate) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate weekBeginDate= LocalDate.parse(startDate,formatter);
+        
+		return wellnessEventRepo.search(startDate);
+		
+		
+		
 	}
 
 	@RequestMapping(path = "/api/update/event/{id}", method = RequestMethod.PUT)
