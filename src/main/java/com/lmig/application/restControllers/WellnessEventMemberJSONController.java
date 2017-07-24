@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lmig.application.entities.Member;
 import com.lmig.application.entities.WellnessEvent;
+import com.lmig.application.jsonResponses.MemberRegistrationUpdate;
 import com.lmig.application.repositories.MemberRepository;
 import com.lmig.application.repositories.WellnessEventRepo;
 
@@ -36,17 +37,45 @@ public class WellnessEventMemberJSONController {
 	 * @see             WellnessEvent
 	 */
 	@ApiOperation(value = "Adds a Member to a set of WellnessEvents")
-	@RequestMapping(path = "/api/addMemberToEvent/{memberID}", method = RequestMethod.PUT)
+	@RequestMapping(path = "/api/addMemberToEvents/{memberID}", method = RequestMethod.PUT)
 	public void addMemberToEvents(@PathVariable Integer memberID, @RequestBody Set<WellnessEvent> eventList) {
 	    Member addingMember = memberRepository.findOne(memberID); 
 		for (WellnessEvent we : eventList) {
 		    WellnessEvent weAdding = wellnessEventRepository.findOne(we.getId());
 			weAdding.addMember(addingMember);
-//			addingMember.addMedallion(weAdding.getMedallion());
 			wellnessEventRepository.saveAndFlush(weAdding);
 		}
 	}
 
+	/**
+	 * Given a Member and two lists of WellnessEvents, add the member to each WellnessEvent in the add list 
+	 * and remove the member from each WellnessEvent in the remove list. 
+	 *
+	 * @param addEventList    A list of WellnessEvents to add a Member to.
+	 * @param removeEventList A list of WellnessEvents to remove a Member from.
+	 * @param memberID        A valid int Member ID
+	 * @see                   Member
+	 * @see                   WellnessEvent
+	 */
+	@ApiOperation(value = "Updates the WellnessEvents for a Member (must pass two lists for add and remove")
+	@RequestMapping(path = "/api/updateMemberEvents/{memberID}", method = RequestMethod.PUT)
+	public void updateMemberEvents(@PathVariable Integer memberID, 
+			@RequestBody MemberRegistrationUpdate memberRegistrationUpdate) {
+	    Member updatingMember = memberRepository.findOne(memberID); 
+	    Set<WellnessEvent> addEventList = memberRegistrationUpdate.addEventList;
+	    Set<WellnessEvent> removeEventList = memberRegistrationUpdate.removeEventList;
+		for (WellnessEvent we : addEventList) {
+		    WellnessEvent weAdding = wellnessEventRepository.findOne(we.getId());
+			weAdding.addMember(updatingMember);
+			wellnessEventRepository.saveAndFlush(weAdding);
+		}
+		for (WellnessEvent we : removeEventList) {
+		    WellnessEvent weRemoving = wellnessEventRepository.findOne(we.getId());
+		    weRemoving.removeMember(updatingMember);
+			wellnessEventRepository.saveAndFlush(weRemoving);
+		}
+	}
+	
 	/**
 	 * Given a Member and a list of WellnessEvents, remove the member from each event. 
 	 *
