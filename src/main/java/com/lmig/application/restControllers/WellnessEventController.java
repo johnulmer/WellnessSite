@@ -1,8 +1,11 @@
 package com.lmig.application.restControllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -23,6 +27,7 @@ import com.lmig.application.repositories.WellnessEventRepo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
 
 
 @RestController
@@ -74,17 +79,19 @@ public class WellnessEventController implements Controller {
 		return new ResponseEntity<String>("Event deleted", HttpStatus.OK);
 	}
 	
-	@RequestMapping(path= "api/event/search/{startDate}", method = RequestMethod.GET)
+	@RequestMapping(path= "api/event/searchStartDate", method = RequestMethod.GET)
 	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
-	public List<WellnessEvent> searchByStartDate(@PathVariable(name = "startDate", required = true) String startDate) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate weekBeginDate= LocalDate.parse(startDate,formatter);
-        
-		return wellnessEventRepo.search(startDate);
+	public List<WellnessEvent> findByStartDate(@RequestParam String startsOn) {
 		
-		
-		
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        Date startDt = Calendar.getInstance().getTime();
+//        String date = df.format(startsOn);
+		System.out.println("eric" + startsOn);
+		System.out.println(LocalDate.parse(startsOn,formatter));
+		List<WellnessEvent> wellnessEvent = wellnessEventRepo.searchByStartDate(LocalDate.parse(startsOn,formatter));
+		return wellnessEvent;
 	}
+	
 
 	@RequestMapping(path = "/api/update/event/{id}", method = RequestMethod.PUT)
 	@ApiOperation(value = "Update Event", notes = "Update existing event by ID")
@@ -96,11 +103,11 @@ public class WellnessEventController implements Controller {
 		if (updatingEvent.getDescription()!= null){
 			e.setDescription(updatingEvent.getDescription());
 		}
-		if (updatingEvent.getEndDate() !=null) {
-			e.setEndDate(updatingEvent.getEndDate());
+		if (updatingEvent.getEndsOn() !=null) {
+			e.setEndsOn(updatingEvent.getEndsOn());
 		}
-		if (updatingEvent.getStartDate() != null) {
-			e.setStartDate(updatingEvent.getStartDate());
+		if (updatingEvent.getStartsOn() != null) {
+			e.setStartsOn(updatingEvent.getStartsOn());
 		}
 		if (updatingEvent.getLocation() != null) {
 			e.setLocation(updatingEvent.getLocation());
@@ -118,17 +125,16 @@ public class WellnessEventController implements Controller {
 	
 	@RequestMapping(path = "/api/resetWellnessEvent", method = RequestMethod.GET)
 	public void resetWellnessEvent() {
-		LocalDate d = LocalDate.now();
-		LocalDate tomorrow = d.plus(1, ChronoUnit.DAYS);
+		LocalDate tomorrow = LocalDate.now().plusDays(1);
+		LocalDate d = LocalDate.now().minusWeeks(1);
 		
-		wellnessEventRepo.save(new WellnessEvent("Event1", d, tomorrow, "Indy", "StepsForever", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event2", d, tomorrow, "Indy1", "StepsForever1", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event3", d, tomorrow, "Indy2", "StepsForever2", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event4", d, tomorrow, "Indy3", "StepsForever3", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event5", d, tomorrow, "Indy4", "StepsForever4", "Community"));
-		wellnessEventRepo.save(new WellnessEvent("Event6", d, tomorrow, "Indy5", "StepsForever5", "Community"));
+		wellnessEventRepo.save(new WellnessEvent("Event2", "Indy1", "StepsForever1", "Community", d, tomorrow));
+		wellnessEventRepo.save(new WellnessEvent("Event2","Indy1", "StepsForever1", "Community",  d, tomorrow));
+		wellnessEventRepo.save(new WellnessEvent("Event3", "Indy2", "StepsForever2", "Community", d, tomorrow));
+		wellnessEventRepo.save(new WellnessEvent("Event4","Indy3", "StepsForever3", "Community",  d, tomorrow));
+		wellnessEventRepo.save(new WellnessEvent("Event5","Indy4", "StepsForever4", "Community",  d, tomorrow));
+		wellnessEventRepo.save(new WellnessEvent("Event6", "Indy5", "StepsForever5", "Community", d, tomorrow));
 	}
-
 
 	@ApiOperation(value = "Returns a list of all Events")
 	@RequestMapping(path = "/api/getAllEvents", method = RequestMethod.GET)

@@ -1,8 +1,9 @@
 package com.lmig.application.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,11 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
 
@@ -36,10 +35,10 @@ public class WellnessEvent implements Serializable {
 //    @OneToOne
 //	private Medallion medallion;
 	private String eventType;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") 
-	private LocalDate startDate;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") 
-	private LocalDate endDate;
+	@JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	private LocalDate startsOn;
+	@JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	private LocalDate endsOn;
 	
 
 	@JoinTable(name = "wellnessevent_member", joinColumns = @JoinColumn(name = "wellnessevent_id") , 
@@ -61,15 +60,16 @@ public class WellnessEvent implements Serializable {
 
 	}
 
-	public WellnessEvent(String eventName, LocalDate startDate, LocalDate endDate, String location, String description,
-		 String eventType) {
+	public WellnessEvent(String eventName, String location, String description,
+		 String eventType, LocalDate startsOn, LocalDate endsOn) {
 		super();
 		this.eventName = eventName;
-		this.startDate = startDate;
-		this.endDate = endDate;
 		this.location = location;
 		this.description = description;
 		this.eventType = eventType;
+		this.startsOn = startsOn;
+		this.endsOn = endsOn;
+		
 	}
 
 	public int getId() {
@@ -85,22 +85,6 @@ public class WellnessEvent implements Serializable {
 
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
-	}
-
-	public LocalDate getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
-
-	public LocalDate getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(LocalDate endDate) {
-		this.endDate = endDate;
 	}
 
 	public String getLocation() {
@@ -126,13 +110,27 @@ public class WellnessEvent implements Serializable {
 	public void setEventType(String eventType) {
 		this.eventType = eventType;
 	}
+
+	public LocalDate getStartsOn() {
+		return startsOn;
+	}
+	public void setStartsOn(LocalDate startsOn) {
+		this.startsOn = startsOn;
+	}
+	public LocalDate getEndsOn() {
+		return endsOn;
+	}
+	public void setEndsOn(LocalDate endsOn) {
+		this.endsOn = endsOn;
+	}
+
 //	public Medallion getMedallion() {
 //		return medallion;
 //	}
 //	public void setMedallion(Medallion medallion) {
 //		this.medallion = medallion;
 //	}
-
+	
 
 //	public void merge(WellnessEvent other) {
 //		if (other.eventName != null) {
@@ -147,11 +145,11 @@ public class WellnessEvent implements Serializable {
 //		if (other.location != null) {
 //			this.location = other.location;
 //		}
-//		if (other.startDate != null) {
-//			this.startDate = other.startDate;
+//		if (other.startsOn != null) {
+//			this.startsOn = other.startsOn;
 //		}
-//		if (other.endDate != null) {
-//			this.endDate = other.endDate;
+//		if (other.endsOn != null) {
+//			this.endsOn = other.endsOn;
 //		}
 //	}
 
