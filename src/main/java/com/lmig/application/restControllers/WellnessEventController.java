@@ -59,14 +59,9 @@ public class WellnessEventController implements Controller {
 	@RequestMapping(path = "/api/add/event", method = RequestMethod.POST)
 	@ApiOperation(value = "Add an Event", notes = "adds a new event - event name must be in request body and must not already")
 	public ResponseEntity<WellnessEvent> createWellnessEvent(@RequestBody WellnessEvent eventBody) {
-//		if (e.getEventName() == null) {
-//			return new ResponseEntity<WellnessEvent>(HttpStatus.BAD_REQUEST);
-//		}
-//		if (wellnessEventRepo.findByEventName(e.getEventName()) != null) {
-//			return new ResponseEntity<WellnessEvent>(HttpStatus.CONFLICT);
-//		}
-		wellnessEventRepo.save(eventBody);
-		return new ResponseEntity<WellnessEvent>(eventBody, HttpStatus.CREATED);
+		WellnessEvent evt = new ConsumeResults().getLngLatFromGoogle(eventBody);
+		wellnessEventRepo.save(evt);
+		return new ResponseEntity<WellnessEvent>(evt, HttpStatus.CREATED);
 	}
 	
 

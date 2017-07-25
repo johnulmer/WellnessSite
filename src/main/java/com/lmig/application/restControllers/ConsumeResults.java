@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.lmig.application.entities.WellnessEvent;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -63,7 +64,7 @@ public class ConsumeResults {
  * Here the fullAddress String is in format like "address,city,state,zipcode". Here address means "street number + route" .
  *
  */
- public Address getLngLatFromGoogle(Address addr) {
+ public WellnessEvent getLngLatFromGoogle(WellnessEvent addr) {
  
  /*
  * Create an java.net.URL object by passing the request URL in constructor. 
