@@ -90,8 +90,6 @@ public class WellnessEventController implements Controller {
 		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //        Date startDt = Calendar.getInstance().getTime();
 //        String date = df.format(startsOn);
-		System.out.println("eric" + startsOn);
-		System.out.println(LocalDate.parse(startsOn,formatter));
 		List<WellnessEvent> wellnessEvent = wellnessEventRepo.searchByStartDate(LocalDate.parse(startsOn,formatter));
 		return wellnessEvent;
 	}
@@ -144,13 +142,16 @@ public class WellnessEventController implements Controller {
 	public void resetWellnessEvent() {
 		LocalDate tomorrow = LocalDate.now().plusDays(1);
 		LocalDate d = LocalDate.now().minusWeeks(1);
+		double l = 39.980659;
+		double lo = -85.909026;
+		int zip = 46037;
 		
-		wellnessEventRepo.save(new WellnessEvent("Event2", "Indy1", "StepsForever1", "Community", d, tomorrow));
-		wellnessEventRepo.save(new WellnessEvent("Event2","Indy1", "StepsForever1", "Community",  d, tomorrow));
-		wellnessEventRepo.save(new WellnessEvent("Event3", "Indy2", "StepsForever2", "Community", d, tomorrow));
-		wellnessEventRepo.save(new WellnessEvent("Event4","Indy3", "StepsForever3", "Community",  d, tomorrow));
-		wellnessEventRepo.save(new WellnessEvent("Event5","Indy4", "StepsForever4", "Community",  d, tomorrow));
-		wellnessEventRepo.save(new WellnessEvent("Event6", "Indy5", "StepsForever5", "Community", d, tomorrow));
+		wellnessEventRepo.save(new WellnessEvent("Event2", "Indy1", "StepsForever1", "Community", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip ,l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event2","Indy1", "StepsForever1", "Community",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event3", "Indy2", "StepsForever2", "Community", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event4","Indy3", "StepsForever3", "Community",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event5","Indy4", "StepsForever4", "Community",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event6", "Indy5", "StepsForever5", "Community", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
 	}
 
 	@ApiOperation(value = "Returns a list of all Events")

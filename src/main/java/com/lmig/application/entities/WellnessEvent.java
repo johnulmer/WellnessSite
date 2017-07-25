@@ -13,7 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.persistence.Column;
+import javax.persistence.GenerationType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
@@ -28,17 +34,68 @@ public class WellnessEvent implements Serializable {
 	@GeneratedValue
 	private int id;
 
-	//@NotNull  uncomment for not null constraint
+	//@NotNull(message = "Event Name is required")  uncomment for not null constraint
 	private String eventName;
 	private String location;
 	private String description;
-//    @OneToOne
+//  @OneToOne
 //	private Medallion medallion;
 	private String eventType;
 	@JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private LocalDate startsOn;
 	@JsonFormat (shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private LocalDate endsOn;
+	//@NotNull(message = "Street Address is required.")
+	//@Size(min = 5)
+	private String streetAddress;
+	//@NotNull(message = "City is required.")
+	//@Size(min = 2)
+	private String city;
+	//@NotNull(message = "State is required.")
+	//@Size(min = 2)
+	private String state;
+	//@NotNull(message = "ZipCode is required")
+	private int zipCode;
+	private Double latitude;
+	private Double longitude;
+	
+	
+	public String getStreetAddress() {
+		return streetAddress;
+	}
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public int getZipCode() {
+		return zipCode;
+	}
+	public void setZipCode(int zipCode) {
+		this.zipCode = zipCode;
+	}
+	public Double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+	public Double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
 	
 
 	@JoinTable(name = "wellnessevent_member", joinColumns = @JoinColumn(name = "wellnessevent_id") , 
@@ -61,7 +118,7 @@ public class WellnessEvent implements Serializable {
 	}
 
 	public WellnessEvent(String eventName, String location, String description,
-		 String eventType, LocalDate startsOn, LocalDate endsOn) {
+		 String eventType, LocalDate startsOn, LocalDate endsOn, String streetAddress, String city, String state, int zipCode, Double latitude, Double longitude ) {
 		super();
 		this.eventName = eventName;
 		this.location = location;
@@ -69,6 +126,12 @@ public class WellnessEvent implements Serializable {
 		this.eventType = eventType;
 		this.startsOn = startsOn;
 		this.endsOn = endsOn;
+		this.streetAddress = streetAddress;
+		this.city = city;
+		this.state = state;
+		this.zipCode = zipCode;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		
 	}
 
