@@ -1,0 +1,83 @@
+-- Table: public."STEPS_OVER_TIME"
+
+-- DROP TABLE public."STEPS_OVER_TIME";
+
+CREATE TABLE public."STEPS_OVER_TIME"
+(
+    "EVENT_ID" integer NOT NULL,
+    "MEMBER_ID" integer NOT NULL,
+    "ACTIVITY_DATE" date NOT NULL,
+    "STEP_COUNT" integer NOT NULL
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."STEPS_OVER_TIME"
+    OWNER to postgres;
+
+
+
+-- Table: public."PERFORMANCE_IMPROVEMENT"
+
+-- DROP TABLE public."PERFORMANCE_IMPROVEMENT";
+
+CREATE TABLE public."PERFORMANCE_IMPROVEMENT"
+(
+    "EVENT_ID" integer NOT NULL,
+    "MEMBER_ID" integer NOT NULL,
+    "START_STAT" double precision NOT NULL,
+    "END_STAT" double precision NOT NULL
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."PERFORMANCE_IMPROVEMENT"
+    OWNER to postgres;
+
+
+
+-- Table: public."MEETING_GOALS"
+
+-- DROP TABLE public."MEETING_GOALS";
+
+CREATE TABLE public."MEETING_GOALS"
+(
+    "EVENT_ID" integer,
+    "MEMBER_ID" integer,
+    "ACTIVITY_DATE" date,
+    "GOAL" double precision,
+    "ACTUAL" double precision
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."MEETING_GOALS"
+    OWNER to postgres;
+
+
+
+
+-- Table: public."HEARTRATE"
+
+-- DROP TABLE public."HEARTRATE";
+
+CREATE TABLE public."HEARTRATE"
+(
+    "EVENT_ID" integer,
+    "MEMBER_ID" integer,
+    "HEARTRATE" integer,
+    "ACTIVITY_TIME" timestamp with time zone
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."HEARTRATE"
+    OWNER to postgres;
