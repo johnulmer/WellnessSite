@@ -1,21 +1,10 @@
 package com.lmig.application.restControllers;
 
-import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lmig.application.entities.Medallion;
-import com.lmig.application.entities.Member;
 import com.lmig.application.repositories.MedallionRepository;
-import com.lmig.application.repositories.MemberRepository;
-
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value="medallions", description="JSON operations pertaining to WellnessSite Medallions")

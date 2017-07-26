@@ -1,15 +1,9 @@
 package com.lmig.application.restControllers;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,14 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
-
 import com.lmig.application.entities.WellnessEvent;
 import com.lmig.application.repositories.WellnessEventRepo;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-
-
 
 @RestController
 @Api(value = "Wellness Events")
@@ -41,15 +31,14 @@ public class WellnessEventController implements Controller {
 	@Autowired
 	private WellnessEventRepo wellnessEventRepo;
 
-
 	// returns event by name
 	@ApiOperation(value = "Returns event matching eventName", notes = "requires path variable eventName")
 	@RequestMapping(path = "/api/eventbyname/{eventName}", method = RequestMethod.GET)
-	public WellnessEvent findByEventName(@PathVariable(name = "eventName", required = true) String eventName)  {
+	public WellnessEvent findByEventName(@PathVariable(name = "eventName", required = true) String eventName) {
 		WellnessEvent e = wellnessEventRepo.findByEventName(eventName);
 		return e;
 	}
-	
+
 	@ApiOperation(value = "Returns event matching ID", notes = "requires path variable ID")
 	@RequestMapping(path = "/api/eventbyid/{id}", method = RequestMethod.GET)
 	public WellnessEvent getEventByID(@PathVariable Integer id) {
@@ -63,8 +52,6 @@ public class WellnessEventController implements Controller {
 		wellnessEventRepo.save(evt);
 		return new ResponseEntity<WellnessEvent>(evt, HttpStatus.CREATED);
 	}
-	
-
 
 	@RequestMapping(path = "/api/delete/event/{id}", method = RequestMethod.DELETE)
 	@ApiOperation(value = "Delete Event", notes = "Deletes an existing event whose ID matches parameter in URL")
@@ -76,56 +63,59 @@ public class WellnessEventController implements Controller {
 		wellnessEventRepo.delete(id);
 		return new ResponseEntity<String>("Event deleted", HttpStatus.OK);
 	}
-	
 
-//	@RequestMapping(path= "api/event/searchStartDate", method = RequestMethod.GET)
-//	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
-//	public List<WellnessEvent> findByStartDate(@RequestParam String startsOn) {
-//		
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//      Date startDt = Calendar.getInstance().getTime();
-//      String date = df.format(startsOn);
-//		List<WellnessEvent> wellnessEvent = wellnessEventRepo.searchByStartDate(LocalDate.parse(startsOn,formatter));
-//		return wellnessEvent;
-//	}
-//	
+	// @RequestMapping(path= "api/event/searchStartDate", method =
+	// RequestMethod.GET)
+	// @ApiOperation(value = "Search by Start Date", notes = "Search by starting
+	// date of wellness event")
+	// public List<WellnessEvent> findByStartDate(@RequestParam String startsOn) {
+	//
+	// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	// Date startDt = Calendar.getInstance().getTime();
+	// String date = df.format(startsOn);
+	// List<WellnessEvent> wellnessEvent =
+	// wellnessEventRepo.searchByStartDate(LocalDate.parse(startsOn,formatter));
+	// return wellnessEvent;
+	// }
 
-//	@RequestMapping(path= "api/event/search/{startDate}", method = RequestMethod.GET)
-//	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
-//	public List<WellnessEvent> searchByStartDate(@PathVariable(name = "startDate", required = true) String startDate) {
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        LocalDate weekBeginDate= LocalDate.parse(startDate,formatter);
-//        
-//		return wellnessEventRepo.search(startDate);
-//		
-//		
-//		
-//	}
-	
-	@RequestMapping(path= "api/event/searchStartDate", method = RequestMethod.GET)
+	// @RequestMapping(path= "api/event/search/{startDate}", method =
+	// RequestMethod.GET)
+	// @ApiOperation(value = "Search by Start Date", notes = "Search by starting
+	// date of wellness event")
+	// public List<WellnessEvent> searchByStartDate(@PathVariable(name =
+	// "startDate", required = true) String startDate) {
+	// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	// LocalDate weekBeginDate= LocalDate.parse(startDate,formatter);
+	//
+	// return wellnessEventRepo.search(startDate);
+	// }
+
+	@RequestMapping(path = "api/event/searchStartDate", method = RequestMethod.GET)
 	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
 	public List<WellnessEvent> findByStartDate(@RequestParam String startsOn, @RequestParam String endsOn) {
-		
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	DateTimeFormatter formatterUno = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-		List<WellnessEvent> wellnessEvent = wellnessEventRepo.searchByStartDate(LocalDate.parse(startsOn,formatter), LocalDate.parse(endsOn, formatterUno));
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatterUno = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+		List<WellnessEvent> wellnessEvent = wellnessEventRepo.searchByStartDate(LocalDate.parse(startsOn, formatter),
+				LocalDate.parse(endsOn, formatterUno));
 		return wellnessEvent;
 	}
-
-
 
 	@RequestMapping(path = "/api/update/event/{id}", method = RequestMethod.PUT)
 	@ApiOperation(value = "Update Event", notes = "Update existing event by ID")
 	public WellnessEvent updateEvent(@PathVariable Integer id, @RequestBody WellnessEvent updatingEvent) {
+		//WellnessEvent we = new WellnessEvent();
+        //String regex = "[0-9]{5}$";
+        
 		WellnessEvent e = wellnessEventRepo.getOne(id);
 		if (updatingEvent.getEventName() != null) {
 			e.setEventName(updatingEvent.getEventName());
 		}
-		if (updatingEvent.getDescription()!= null){
+		if (updatingEvent.getDescription() != null) {
 			e.setDescription(updatingEvent.getDescription());
 		}
-		if (updatingEvent.getEndsOn() !=null) {
+		if (updatingEvent.getEndsOn() != null) {
 			e.setEndsOn(updatingEvent.getEndsOn());
 		}
 		if (updatingEvent.getStartsOn() != null) {
@@ -136,29 +126,46 @@ public class WellnessEventController implements Controller {
 		}
 		if (updatingEvent.getEventType() != null) {
 			e.setEventType(updatingEvent.getEventType());
-		}
-			wellnessEventRepo.save(e);
-			return e;
-	}
-	
-	
 
-	
-	
+		}
+		if (updatingEvent.getStreetAddress() != null) {
+			e.setStreetAddress(updatingEvent.getStreetAddress());
+		}
+		if (updatingEvent.getCity() != null) {
+			e.setCity(updatingEvent.getCity());
+		}
+		if (updatingEvent.getState() != null) {
+			e.setState(updatingEvent.getState());
+		}
+		if (updatingEvent.getZipCode() != null) {
+			e.setZipCode(updatingEvent.getZipCode());
+		}
+		updatingEvent = new ConsumeResults().getLngLatFromGoogle(updatingEvent);
+		e.setLatitude(updatingEvent.getLatitude());
+		e.setLongitude(updatingEvent.getLongitude());
+		wellnessEventRepo.save(e);
+		return e;
+	}
+
 	@RequestMapping(path = "/api/resetWellnessEvent", method = RequestMethod.GET)
 	public void resetWellnessEvent() {
 		LocalDate tomorrow = LocalDate.now().plusDays(1);
 		LocalDate d = LocalDate.now().minusWeeks(1);
 		double l = 39.980659;
 		double lo = -85.909026;
-		int zip = 46037;
-		
-		wellnessEventRepo.save(new WellnessEvent("Event2", "Indy1", "StepsForever1", "5K", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip ,l, lo));
-		wellnessEventRepo.save(new WellnessEvent("Event2","Indy1", "StepsForever1", "10K",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
-		wellnessEventRepo.save(new WellnessEvent("Event3", "Indy2", "StepsForever2", "Step Count", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
-		wellnessEventRepo.save(new WellnessEvent("Event4","Indy3", "StepsForever3", "Step Count",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
-		wellnessEventRepo.save(new WellnessEvent("Event5","Indy4", "StepsForever4", "10k",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
-		wellnessEventRepo.save(new WellnessEvent("Event6", "Indy5", "StepsForever5", "5k", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
+
+		wellnessEventRepo.save(new WellnessEvent("Event2", "Indy1", "StepsForever1", "5K", d, tomorrow,
+				"14277 Camelot House Way", "Fishers", "IN", "46037", l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event2", "Indy1", "StepsForever1", "10K", d, tomorrow,
+				"14277 Camelot House Way", "Fishers", "IN", "46037", l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event3", "Indy2", "StepsForever2", "Step Count", d, tomorrow,
+				"14277 Camelot House Way", "Fishers", "IN", "46037", l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event4", "Indy3", "StepsForever3", "Step Count", d, tomorrow,
+				"14277 Camelot House Way", "Fishers", "IN", "46037", l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event5", "Indy4", "StepsForever4", "10k", d, tomorrow,
+				"14277 Camelot House Way", "Fishers", "IN", "46037", l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event6", "Indy5", "StepsForever5", "5k", d, tomorrow,
+				"14277 Camelot House Way", "Fishers", "IN", "46037", l, lo));
 	}
 
 	@ApiOperation(value = "Returns a list of all Events")
@@ -167,7 +174,6 @@ public class WellnessEventController implements Controller {
 		List<WellnessEvent> wellnessEvent = wellnessEventRepo.findAll();
 		return wellnessEvent;
 	}
-	
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {

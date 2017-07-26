@@ -55,7 +55,7 @@ public class WellnessEvent implements Serializable {
 	//@Size(min = 2)
 	private String state;
 	//@NotNull(message = "ZipCode is required")
-	private int zipCode;
+	private String zipCode;
 	private Double latitude;
 	private Double longitude;
 	
@@ -78,10 +78,10 @@ public class WellnessEvent implements Serializable {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public int getZipCode() {
+	public String getZipCode() {
 		return zipCode;
 	}
-	public void setZipCode(int zipCode) {
+	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
 	public Double getLatitude() {
@@ -118,7 +118,7 @@ public class WellnessEvent implements Serializable {
 	}
 
 	public WellnessEvent(String eventName, String location, String description,
-		 String eventType, LocalDate startsOn, LocalDate endsOn, String streetAddress, String city, String state, int zipCode, Double latitude, Double longitude ) {
+		 String eventType, LocalDate startsOn, LocalDate endsOn, String streetAddress, String city, String state, String zipCode, Double latitude, Double longitude ) {
 		super();
 		this.eventName = eventName;
 		this.location = location;
