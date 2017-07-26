@@ -59,14 +59,9 @@ public class WellnessEventController implements Controller {
 	@RequestMapping(path = "/api/add/event", method = RequestMethod.POST)
 	@ApiOperation(value = "Add an Event", notes = "adds a new event - event name must be in request body and must not already")
 	public ResponseEntity<WellnessEvent> createWellnessEvent(@RequestBody WellnessEvent eventBody) {
-//		if (e.getEventName() == null) {
-//			return new ResponseEntity<WellnessEvent>(HttpStatus.BAD_REQUEST);
-//		}
-//		if (wellnessEventRepo.findByEventName(e.getEventName()) != null) {
-//			return new ResponseEntity<WellnessEvent>(HttpStatus.CONFLICT);
-//		}
-		wellnessEventRepo.save(eventBody);
-		return new ResponseEntity<WellnessEvent>(eventBody, HttpStatus.CREATED);
+		WellnessEvent evt = new ConsumeResults().getLngLatFromGoogle(eventBody);
+		wellnessEventRepo.save(evt);
+		return new ResponseEntity<WellnessEvent>(evt, HttpStatus.CREATED);
 	}
 	
 
@@ -83,17 +78,17 @@ public class WellnessEventController implements Controller {
 	}
 	
 
-	@RequestMapping(path= "api/event/searchStartDate", method = RequestMethod.GET)
-	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
-	public List<WellnessEvent> findByStartDate(@RequestParam String startsOn) {
-		
-		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//        Date startDt = Calendar.getInstance().getTime();
-//        String date = df.format(startsOn);
-		List<WellnessEvent> wellnessEvent = wellnessEventRepo.searchByStartDate(LocalDate.parse(startsOn,formatter));
-		return wellnessEvent;
-	}
-	
+//	@RequestMapping(path= "api/event/searchStartDate", method = RequestMethod.GET)
+//	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
+//	public List<WellnessEvent> findByStartDate(@RequestParam String startsOn) {
+//		
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//      Date startDt = Calendar.getInstance().getTime();
+//      String date = df.format(startsOn);
+//		List<WellnessEvent> wellnessEvent = wellnessEventRepo.searchByStartDate(LocalDate.parse(startsOn,formatter));
+//		return wellnessEvent;
+//	}
+//	
 
 //	@RequestMapping(path= "api/event/search/{startDate}", method = RequestMethod.GET)
 //	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
@@ -106,6 +101,18 @@ public class WellnessEventController implements Controller {
 //		
 //		
 //	}
+	
+	@RequestMapping(path= "api/event/searchStartDate", method = RequestMethod.GET)
+	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
+	public List<WellnessEvent> findByStartDate(@RequestParam String startsOn, @RequestParam String endsOn) {
+		
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	DateTimeFormatter formatterUno = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+		List<WellnessEvent> wellnessEvent = wellnessEventRepo.searchByStartDate(LocalDate.parse(startsOn,formatter), LocalDate.parse(endsOn, formatterUno));
+		return wellnessEvent;
+	}
+
 
 
 	@RequestMapping(path = "/api/update/event/{id}", method = RequestMethod.PUT)
