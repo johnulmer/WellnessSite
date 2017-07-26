@@ -1,5 +1,6 @@
 package com.lmig.application.activityEntities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class HeartrateActivityRow {
@@ -8,7 +9,11 @@ public class HeartrateActivityRow {
 	private int memberID;
 	private Date statTimestamp;
 	private int stat;
+	private String formattedTime;
 	
+	public String getFormattedTime() {
+		return formattedTime;
+	}
 	public HeartrateActivityRow() {
 		
 	}
@@ -20,6 +25,8 @@ public class HeartrateActivityRow {
 		this.memberID = memberID;
 		this.statTimestamp = statTimestamp;
 		this.stat = stat;
+		SimpleDateFormat dt = new SimpleDateFormat("mm-dd-yyyyy hh:mm:ss");
+		this.formattedTime = dt.format(this.statTimestamp);
 	}
 	
 	public int getEventID() {
