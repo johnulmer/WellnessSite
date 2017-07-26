@@ -11,7 +11,6 @@ public class FitBitSteps {
 	
     public FitBitSteps() {
     }
-    @JsonProperty("activities-log-steps")
-    private HashMap<Date, int> activities_log_steps;
+
 
 }

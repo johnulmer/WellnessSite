@@ -1,6 +1,7 @@
 package com.lmig.application.restControllers;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,31 @@ public class WellnessEventMemberJSONController {
 	@RequestMapping(path = "/api/addMemberToEvents/{memberID}", method = RequestMethod.PUT)
 	public void addMemberToEvents(@PathVariable Integer memberID, @RequestBody Set<WellnessEvent> eventList) {
 	    Member addingMember = memberRepository.findOne(memberID); 
+		for (WellnessEvent we : eventList) {
+		    WellnessEvent weAdding = wellnessEventRepository.findOne(we.getId());
+			weAdding.addMember(addingMember);
+			wellnessEventRepository.saveAndFlush(weAdding);
+		}
+	}
+	
+	/**
+	 * Given a Member and a list of WellnessEvents, remove the member from everything and 
+	 * then add the member to each WellnessEvent in the list. 
+	 *
+	 * @param eventList A list of WellnessEvents to add a Member to.
+	 * @param memberID  A valid int Member ID
+	 * @see             Member
+	 * @see             WellnessEvent
+	 */
+	@ApiOperation(value = "Adds a Member to a set of WellnessEvents after removing from all WellnessEvents")
+	@RequestMapping(path = "/api/addMemberToEventsNuclearOption/{memberID}", method = RequestMethod.PUT)
+	public void addMemberToEventsNuclearOption(@PathVariable Integer memberID, @RequestBody Set<WellnessEvent> eventList) {
+	    Member addingMember = memberRepository.findOne(memberID);
+	    List<WellnessEvent> removeList = wellnessEventRepository.findAll();
+		for (WellnessEvent we : removeList) {
+			we.removeMember(addingMember);
+			wellnessEventRepository.saveAndFlush(we);
+		}
 		for (WellnessEvent we : eventList) {
 		    WellnessEvent weAdding = wellnessEventRepository.findOne(we.getId());
 			weAdding.addMember(addingMember);
