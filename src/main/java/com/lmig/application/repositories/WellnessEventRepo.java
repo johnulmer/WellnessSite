@@ -17,7 +17,16 @@ public interface WellnessEventRepo extends JpaRepository <WellnessEvent, Integer
 	@Query("Select e from WellnessEvent e where (UPPER(e.eventName) = UPPER(:eventName))")
 	public WellnessEvent findByEventName(@Param("eventName") String eventName);
 	
-	@Query("Select e from WellnessEvent e WHERE  e.startsOn = :startsOn")
-	public List<WellnessEvent> searchByStartDate(@Param("startsOn") LocalDate startDt);
+//	@Query("Select e from WellnessEvent e WHERE  e.startsOn = :startsOn")
+//	public List<WellnessEvent> searchByStartDate(@Param("startsOn") LocalDate startDt);
+	
+
+	//@Query("Select e from WellnessEvent e WHERE  e.startsOn = :startsOn")
+	
+	@Query("SELECT e FROM WellnessEvent e WHERE e.startsOn BETWEEN :startsOn AND :endsOn")
+	public List<WellnessEvent> searchByStartDate(@Param("startsOn") LocalDate startsOn, @Param("endsOn") LocalDate endsOn);
+
+
+
 
 }
