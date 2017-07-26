@@ -7,25 +7,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.List;
-
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lmig.application.entities.WellnessEvent;
 
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @Component
@@ -65,19 +52,11 @@ public class ConsumeResults {
  *
  */
  public WellnessEvent getLngLatFromGoogle(WellnessEvent addr) {
- 
- /*
- * Create an java.net.URL object by passing the request URL in constructor. 
- * Here you can see I am converting the fullAddress String in UTF-8 format. 
- * You will get Exception if you don't convert your address in UTF-8 format. Perhaps google loves UTF-8 format. :)
- * In parameter we also need to pass "sensor" parameter.
- * sensor (required parameter) — Indicates whether or not the geocoding request comes from a device with a location sensor. This value must be either true or false.
- */
 
 	 String fullAddress = addr.getStreetAddress() + " "+ addr.getCity() 
 		+ " , " + addr.getState() + " , " + addr.getZipCode(); 
 	 
-	 Gson gson = new Gson();
+	 //Gson gson = new Gson();
 	 
 	 URL url = null;
 	 try {

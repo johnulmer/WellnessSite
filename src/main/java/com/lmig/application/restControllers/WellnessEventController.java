@@ -153,12 +153,12 @@ public class WellnessEventController implements Controller {
 		double lo = -85.909026;
 		int zip = 46037;
 		
-		wellnessEventRepo.save(new WellnessEvent("Event2", "Indy1", "StepsForever1", "Community", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip ,l, lo));
-		wellnessEventRepo.save(new WellnessEvent("Event2","Indy1", "StepsForever1", "Community",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
-		wellnessEventRepo.save(new WellnessEvent("Event3", "Indy2", "StepsForever2", "Community", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
-		wellnessEventRepo.save(new WellnessEvent("Event4","Indy3", "StepsForever3", "Community",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
-		wellnessEventRepo.save(new WellnessEvent("Event5","Indy4", "StepsForever4", "Community",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
-		wellnessEventRepo.save(new WellnessEvent("Event6", "Indy5", "StepsForever5", "Community", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event2", "Indy1", "StepsForever1", "5K", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip ,l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event2","Indy1", "StepsForever1", "10K",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event3", "Indy2", "StepsForever2", "Step Count", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event4","Indy3", "StepsForever3", "Step Count",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event5","Indy4", "StepsForever4", "10k",  d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
+		wellnessEventRepo.save(new WellnessEvent("Event6", "Indy5", "StepsForever5", "5k", d, tomorrow, "14277 Camelot House Way", "Fishers", "IN", zip, l, lo));
 	}
 
 	@ApiOperation(value = "Returns a list of all Events")
