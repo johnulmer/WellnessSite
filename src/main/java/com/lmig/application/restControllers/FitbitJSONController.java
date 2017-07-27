@@ -2,6 +2,7 @@ package com.lmig.application.restControllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IntSummaryStatistics;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,13 @@ public class FitbitJSONController {
 	@Autowired
 	private WellnessEventRepo wellnessEventRepository;
 
+	@ApiOperation(value = "Show the stat summary for a step event")
+	@RequestMapping(path = "/api/activity/stepsOverTimeStatSummary/{eventID}", method = RequestMethod.GET)
+	public IntSummaryStatistics stepsOverTimeStatSummary(@PathVariable Integer eventID) {
+		StepsOverTimeActivityImplementation sotai = new StepsOverTimeActivityImplementation();
+		return sotai.stepsOverTimeStatSummary(eventID);
+	}
+	
 	@ApiOperation(value = "this will drop four tables for the demo data of the four event types and rebuild them")
 	@RequestMapping(path = "/api/activity/mutuallyAssuredDestruction", method = RequestMethod.GET)
 	public void mutuallyAssuredDestruction() {
@@ -43,7 +51,7 @@ public class FitbitJSONController {
 		sotai.reset();
 	}
 	
-	@ApiOperation(value = "Returns four lists showing the events per activity type")
+	@ApiOperation(value = "Returns four lists showing the events with data per activity type")
 	@RequestMapping(path = "/api/activity/EventsByActivityType", method = RequestMethod.GET)
 	public HashMap<String, ArrayList<Integer>> getEventsByActivityType() {
 		HashMap<String, ArrayList<Integer>> returnHash = new HashMap<String, ArrayList<Integer>>();
@@ -61,6 +69,28 @@ public class FitbitJSONController {
 		
 		StepsOverTimeActivityImplementation sotai = new StepsOverTimeActivityImplementation();
 		ArrayList<Integer> stepsOverTimeList = sotai.getEventList();
+		returnHash.put("stepsOverTimeEvents", stepsOverTimeList);
+		return returnHash;
+	}
+	
+	@ApiOperation(value = "Returns four lists showing the events with data per activity type per member")
+	@RequestMapping(path = "/api/activity/getMemberEvents/{memberID}", method = RequestMethod.GET)
+	public HashMap<String, ArrayList<Integer>> getMemberEvents(@PathVariable Integer memberID) {
+		HashMap<String, ArrayList<Integer>> returnHash = new HashMap<String, ArrayList<Integer>>();
+		HeartrateActivityImplementation hai = new HeartrateActivityImplementation();
+		ArrayList<Integer> heartrateList = hai.getMemberEventList(memberID);
+		returnHash.put("heartrateEvents", heartrateList);
+		
+		PerformanceImprovementActivityImplementation peai = new PerformanceImprovementActivityImplementation();
+		ArrayList<Integer> performanceImprovementList = peai.getMemberEventList(memberID);
+		returnHash.put("performanceImprovementEvents", performanceImprovementList);
+		
+		MeetingGoalsActivityImplementation mgai = new MeetingGoalsActivityImplementation();
+		ArrayList<Integer> meetingGoalsList = mgai.getMemberEventList(memberID);
+		returnHash.put("meetingGoalsEvents", meetingGoalsList);
+		
+		StepsOverTimeActivityImplementation sotai = new StepsOverTimeActivityImplementation();
+		ArrayList<Integer> stepsOverTimeList = sotai.getMemberEventList(memberID);
 		returnHash.put("stepsOverTimeEvents", stepsOverTimeList);
 		return returnHash;
 	}

@@ -1,8 +1,6 @@
-package com.lmig.application.repositories;
+package com.lmig.application.unused;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.lmig.application.entities.Team;
 
 public interface TeamRepository extends JpaRepository<Team, Integer> {
 

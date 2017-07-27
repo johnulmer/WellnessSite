@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.lmig.application.unused.Medallion;
 
 @Entity
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")

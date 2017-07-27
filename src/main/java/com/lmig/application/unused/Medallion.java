@@ -1,4 +1,4 @@
-package com.lmig.application.entities;
+package com.lmig.application.unused;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

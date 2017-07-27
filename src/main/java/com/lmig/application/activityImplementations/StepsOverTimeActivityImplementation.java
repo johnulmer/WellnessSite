@@ -1,11 +1,17 @@
 package com.lmig.application.activityImplementations;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.IntSummaryStatistics;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.lmig.application.WellnessSiteDB;
 import com.lmig.application.activityEntities.StepsOverTimeActivityRow;
@@ -44,6 +50,39 @@ public class StepsOverTimeActivityImplementation {
 		}
 		return returnList;
 	}
+	
+	public IntSummaryStatistics stepsOverTimeStatSummary(int eventID) {
+		//ArrayList<Integer> returnList = new ArrayList<Integer>();
+		IntSummaryStatistics stepSummary = new IntSummaryStatistics();
+		String sql = "select \"STEP_COUNT\" from public.\"STEPS_OVER_TIME\" where \"EVENT_ID\" = ?";
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, eventID);
+			ResultSet rs = pstmt.executeQuery();
+			Array rsArray = rs.getArray("STEP_COUNT");
+			Integer[] stepArray = (Integer[])rsArray.getArray();
+		    stepSummary = Arrays.stream(stepArray)
+		    		.collect(
+		    				Collectors.summarizingInt((Integer x) -> x));
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return stepSummary;
+	}
+	
+	public ArrayList<Integer> getMemberEventList(int memberID) {
+		ArrayList<Integer> returnList = new ArrayList<Integer>();
+		String sql = "select distinct \"EVENT_ID\" from public.\"STEPS_OVER_TIME\" where \"MEMBER_ID\" = ?";
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, memberID);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				returnList.add(rs.getInt("EVENT_ID"));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return returnList;
+	}	
 	
 	public void reset() {
 		String dropTableSQL = "DROP TABLE IF EXISTS public.\"STEPS_OVER_TIME\"";
@@ -98,28 +137,28 @@ public class StepsOverTimeActivityImplementation {
 				"(4, 1, '2017-06-27', 2250),\r\n" + 
 				"(4, 2, '2017-06-27', 2345),\r\n" + 
 				"(4, 3, '2017-06-27', 17500),\r\n" + 
-				"(5, 1, '2017-07-20', 5000),\r\n" + 
+				"(5, 5, '2017-07-20', 5000),\r\n" + 
 				"(5, 2, '2017-07-20', 7500),\r\n" + 
 				"(5, 3, '2017-07-20', 3000),\r\n" + 
-				"(5, 1, '2017-07-21', 8000),\r\n" + 
+				"(5, 5, '2017-07-21', 8000),\r\n" + 
 				"(5, 2, '2017-07-21', 9500),\r\n" + 
 				"(5, 3, '2017-07-21', 6500),\r\n" + 
-				"(5, 1, '2017-07-22', 11000),\r\n" + 
+				"(5, 5, '2017-07-22', 11000),\r\n" + 
 				"(5, 2, '2017-07-22', 10000),\r\n" + 
 				"(5, 3, '2017-07-22', 9500),\r\n" + 
-				"(5, 1, '2017-07-23', 5000),\r\n" + 
+				"(5, 5, '2017-07-23', 5000),\r\n" + 
 				"(5, 2, '2017-07-23', 8000),\r\n" + 
 				"(5, 3, '2017-07-23', 3500),\r\n" + 
-				"(5, 1, '2017-07-24', 5500),\r\n" + 
+				"(5, 5, '2017-07-24', 5500),\r\n" + 
 				"(5, 2, '2017-07-24', 7750),\r\n" + 
 				"(5, 3, '2017-07-24', 3750),\r\n" + 
-				"(5, 1, '2017-07-25', 1500),\r\n" + 
+				"(5, 5, '2017-07-25', 1500),\r\n" + 
 				"(5, 2, '2017-07-25', 1750),\r\n" + 
 				"(5, 3, '2017-07-25', 900),\r\n" + 
-				"(5, 1, '2017-07-26', 4500),\r\n" + 
+				"(5, 5, '2017-07-26', 4500),\r\n" + 
 				"(5, 2, '2017-07-26', 8700),\r\n" + 
 				"(5, 3, '2017-07-26', 2300),\r\n" + 
-				"(5, 1, '2017-07-27', 5500),\r\n" + 
+				"(5, 5, '2017-07-27', 5500),\r\n" + 
 				"(5, 2, '2017-07-27', 9750),\r\n" + 
 				"(5, 3, '2017-07-27', 4000)";
 		try (Connection conn = this.connect(); 
@@ -132,9 +171,10 @@ public class StepsOverTimeActivityImplementation {
 
 public Connection connect() {
 	// SQLite connection string
-	String url = WellnessSiteDB.DBURL;
-	String username = WellnessSiteDB.DBUSER;
-	String password = WellnessSiteDB.DBPWD;
+	WellnessSiteDB wsdb = new WellnessSiteDB();
+	String url = wsdb.getDburl();
+	String username = wsdb.getDbuser();
+	String password = wsdb.getDbpwd();
 	Connection conn = null;
 	try {
 		conn = DriverManager.getConnection(url, username, password);

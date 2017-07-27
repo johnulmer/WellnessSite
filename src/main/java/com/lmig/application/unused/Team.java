@@ -1,4 +1,4 @@
-package com.lmig.application.entities;
+package com.lmig.application.unused;
 
 import java.util.Set;
 
@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.lmig.application.entities.Member;
+import com.lmig.application.entities.WellnessEvent;
 
 @Entity
 @Table(name = "team")

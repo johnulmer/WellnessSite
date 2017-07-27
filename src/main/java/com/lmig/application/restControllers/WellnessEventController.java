@@ -2,7 +2,9 @@ package com.lmig.application.restControllers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
+
+import com.lmig.application.entities.Member;
 import com.lmig.application.entities.WellnessEvent;
+import com.lmig.application.repositories.MemberRepository;
 import com.lmig.application.repositories.WellnessEventRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +35,8 @@ public class WellnessEventController implements Controller {
 
 	@Autowired
 	private WellnessEventRepo wellnessEventRepo;
+	@Autowired
+	private MemberRepository memberRepository;
 
 	// returns event by name
 	@ApiOperation(value = "Returns event matching eventName", notes = "requires path variable eventName")
@@ -174,6 +181,23 @@ public class WellnessEventController implements Controller {
 		List<WellnessEvent> wellnessEvent = wellnessEventRepo.findAll();
 		return wellnessEvent;
 	}
+	
+//	@ApiOperation(value = "Returns a list of sorted Events")
+//	@RequestMapping(path = "/api/getAllEventsByMemberSorted/{memberID}", method = RequestMethod.GET)
+//	public ArrayList<WellnessEvent> getAllEventsSorted(@PathVariable Integer memberID) {
+//		ArrayList<WellnessEvent> returnList = new ArrayList<WellnessEvent>(); 
+//		List<WellnessEvent> wellnessEvents = wellnessEventRepo.findAll();
+//		Member member = memberRepository.findOne(memberID);
+//		Set<WellnessEvent> eventSet = member.getWellnessEvents();
+//		for (WellnessEvent registeredWellnessEvent: eventSet) {
+//			returnList.add(registeredWellnessEvent);
+//			wellnessEvents.remove(registeredWellnessEvent);
+//		}
+//		for (WellnessEvent unregisteredWellnessEvent: wellnessEvents) {
+//			returnList.add(unregisteredWellnessEvent);
+//		}
+//		return returnList;
+//	}
 
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {

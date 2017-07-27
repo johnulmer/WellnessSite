@@ -65,6 +65,21 @@ public class MeetingGoalsActivityImplementation {
 		return returnList;
 	}
 	
+	public ArrayList<Integer> getMemberEventList(int memberID) {
+		ArrayList<Integer> returnList = new ArrayList<Integer>();
+		String sql = "select distinct \"EVENT_ID\" from public.\"MEETING_GOALS\" where \"MEMBER_ID\" = ?";
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, memberID);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				returnList.add(rs.getInt("EVENT_ID"));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return returnList;
+	}	
+	
 	public void reset() {
 		String dropTableSQL = "DROP TABLE IF EXISTS public.\"MEETING_GOALS\"";
 		String createTableSQL = "CREATE TABLE public.\"MEETING_GOALS\"\r\n" + 
@@ -101,11 +116,11 @@ public class MeetingGoalsActivityImplementation {
 				"(1, 2, '2017-06-21', 128, 128),\r\n" + 
 				"(1, 3, '2017-06-21', 99, 128),\r\n" + 
 				"(8, 1, '2017-07-20', 112, 128),\r\n" + 
-				"(8, 2, '2017-07-20', 132, 128),\r\n" + 
-				"(8, 3, '2017-07-20', 100, 128),\r\n" + 
+				"(8, 4, '2017-07-20', 132, 128),\r\n" + 
+				"(8, 7, '2017-07-20', 100, 128),\r\n" + 
 				"(8, 1, '2017-07-21', 94, 128),\r\n" + 
-				"(8, 2, '2017-07-21', 128, 128),\r\n" + 
-				"(8, 3, '2017-07-21', 111, 128)";
+				"(8, 4, '2017-07-21', 128, 128),\r\n" + 
+				"(8, 7, '2017-07-21', 111, 128)";
 		try (Connection conn = this.connect(); 
 				PreparedStatement pstmtUpdateRows = conn.prepareStatement(updateRowsSQL);) {
 			pstmtUpdateRows.executeUpdate();
@@ -116,9 +131,10 @@ public class MeetingGoalsActivityImplementation {
 
 public Connection connect() {
 	// SQLite connection string
-	String url = WellnessSiteDB.DBURL;
-	String username = WellnessSiteDB.DBUSER;
-	String password = WellnessSiteDB.DBPWD;
+	WellnessSiteDB wsdb = new WellnessSiteDB();
+	String url = wsdb.getDburl();
+	String username = wsdb.getDbuser();
+	String password = wsdb.getDbpwd();
 	Connection conn = null;
 	try {
 		conn = DriverManager.getConnection(url, username, password);

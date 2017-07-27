@@ -1,4 +1,4 @@
-package com.lmig.application.restControllers;
+package com.lmig.application.unused;
 
 import javax.validation.Valid;
 
@@ -7,14 +7,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.lmig.application.entities.Team;
-import com.lmig.application.repositories.MedallionRepository;
-import com.lmig.application.repositories.TeamRepository;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@RestController
-@Api(value = "Teams", description = "JSON operations pertaining to WellnessSite Teams")
+//@RestController
+//@Api(value = "Teams", description = "JSON operations pertaining to WellnessSite Teams")
 public class TeamJSONController {
 
 	@Autowired
