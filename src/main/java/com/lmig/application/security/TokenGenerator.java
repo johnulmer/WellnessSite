@@ -18,11 +18,7 @@ import java.util.StringTokenizer;
  */
 public class TokenGenerator {
 
-	/**
-	 * could have used anything.. just make sure its the same for encryption and
-	 * description so good idea to define it separately here, i do think there is a
-	 * max length so do get crazy
-	 */
+
 	private static String SECRET = "f!36N0%13";
 
 	/**
