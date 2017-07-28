@@ -21,16 +21,16 @@ public class WellnessSiteDB {
 //	private String dbpwd = env.getProperty("spring.datasource.password");
 //	private String dbuser = env.getProperty("spring.datasource.username");
 //	
-	@Value("${spring.datasource.url}")
-	private String dburl;
-	@Value("${spring.datasource.password}")
-	private String dbpwd;
-	@Value("${spring.datasource.username}")
-	private String dbuser;	
+//	@Value("${spring.datasource.url}")
+//	private String dburl;
+//	@Value("${spring.datasource.password}")
+//	private String dbpwd;
+//	@Value("${spring.datasource.username}")
+//	private String dbuser;	
 //	
-//	private String dburl = "jdbc:postgresql://localhost/wellnessDB";
-//	private String dbpwd = "gfinsgtgl70";
-//	private String dbuser = "postgres";
+	private String dburl = "jdbc:postgresql://localhost/wellnessDB";
+	private String dbpwd = "gfinsgtgl70";
+	private String dbuser = "postgres";
 	
 	public String getDburl() {
 		return dburl;
