@@ -26,4 +26,27 @@ public class AuthenticationController {
 		  return new ResponseEntity<Member>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	
+	@RequestMapping(path = "/open/login/new/", method = RequestMethod.POST, produces = "application/json")
+	public ResponseEntity<Member> loginA(@RequestBody Member j) throws Throwable {
+		System.out.println("Logging in user " + j.getEmail());
+		if (j.getEmail() == null) {
+			return new ResponseEntity<Member>(HttpStatus.BAD_REQUEST);
+		}
+		
+		if (j.getPassword() == null) {
+			return new ResponseEntity<Member>(HttpStatus.BAD_REQUEST);
+		}
+		Member member2 = new Member(j.getEmail(),j.getPassword());
+		Member member = memberRepository.checkCredentials(member2.getEmail(), member2.getEncPassword());
+		if (member != null) {
+			return new ResponseEntity<Member>(member, HttpStatus.OK);
+		}
+		return new ResponseEntity<Member>(HttpStatus.UNAUTHORIZED);
+	}
+	
+	
+
+
 }

@@ -3,6 +3,8 @@ package com.lmig.application.restControllers;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,24 @@ public class MemberJSONController {
 	 *            default values for active and admin.
 	 * @return returnedMember with ID set
 	 * @see Member
+	 * 
 	 */
+	@ApiOperation(value = "Add a New Member Encrypted")
+	@RequestMapping(path = "/api/member/new", method = RequestMethod.POST)
+	public ResponseEntity<Member> addMember1(@RequestBody @Valid Member addingMember) {
+		System.out.println("/api/member/new POST ");
+		if (addingMember.getEmail()== null) {
+			return new ResponseEntity<Member>(HttpStatus.BAD_REQUEST);
+		}
+		if (memberRepository.findMemberByUserName(addingMember.getEmail()) != null) {
+			return new ResponseEntity<Member>(HttpStatus.BAD_REQUEST);
+		} if(addingMember.getPassword() != null){
+			addingMember.setEncPassword(addingMember.getPassword());
+		}
+		memberRepository.save(addingMember);
+		return new ResponseEntity<Member>(addingMember, HttpStatus.CREATED);
+}	
+
 	@ApiOperation(value = "Adds a new member requires JSON object")
 	@RequestMapping(path = "/api/member", method = RequestMethod.POST)
 	public Member addMember(@RequestBody @Valid Member addingMember) {
@@ -203,6 +222,7 @@ public class MemberJSONController {
 
 	@RequestMapping(path = "/api/resetMemberTable", method = RequestMethod.GET)
 	public void resetMemberTable() {
+		
 		// Medallion joinerMedallion = medallionRepository.save(new Medallion("Wellness
 		// Site Member", "I am a Wellness Site Member!"));
 		// Member m1 = memberRepository.save(new Member("john1", "john1@blah.com",

@@ -35,5 +35,11 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 			+ "(UPPER(m.email) = UPPER(:email)) AND "
 			+ "(UPPER(m.password) = UPPER(:password))")
 	public Member findByEmailAndPassword(@Param("email")String email, @Param("password") String password);
+	
+	@Query("SELECT m from Member m WHERE UPPER(email) = UPPER(:email)")
+	public Member findMemberByUserName(@Param("email") String email);
+	
+	@Query("SELECT m from Member m WHERE UPPER(email) = UPPER(:email) and encPassword = :password")
+	public Member checkCredentials(@Param("email") String email, @Param("password") String password);
 
 }

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.OrderBy;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,13 +21,10 @@ public interface WellnessEventRepo extends JpaRepository <WellnessEvent, Integer
 	
 //	@Query("Select e from WellnessEvent e WHERE  e.startsOn = :startsOn")
 //	public List<WellnessEvent> searchByStartDate(@Param("startsOn") LocalDate startDt);
-	
 
 	//@Query("Select e from WellnessEvent e WHERE  e.startsOn = :startsOn")
-	
 	@Query("SELECT e FROM WellnessEvent e WHERE e.startsOn BETWEEN :startsOn AND :endsOn")
 	public List<WellnessEvent> searchByStartDate(@Param("startsOn") LocalDate startsOn, @Param("endsOn") LocalDate endsOn);
-
 
 
 

@@ -64,32 +64,6 @@ public class WellnessEventController implements Controller {
 		return new ResponseEntity<String>("Event deleted", HttpStatus.OK);
 	}
 
-	// @RequestMapping(path= "api/event/searchStartDate", method =
-	// RequestMethod.GET)
-	// @ApiOperation(value = "Search by Start Date", notes = "Search by starting
-	// date of wellness event")
-	// public List<WellnessEvent> findByStartDate(@RequestParam String startsOn) {
-	//
-	// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	// Date startDt = Calendar.getInstance().getTime();
-	// String date = df.format(startsOn);
-	// List<WellnessEvent> wellnessEvent =
-	// wellnessEventRepo.searchByStartDate(LocalDate.parse(startsOn,formatter));
-	// return wellnessEvent;
-	// }
-
-	// @RequestMapping(path= "api/event/search/{startDate}", method =
-	// RequestMethod.GET)
-	// @ApiOperation(value = "Search by Start Date", notes = "Search by starting
-	// date of wellness event")
-	// public List<WellnessEvent> searchByStartDate(@PathVariable(name =
-	// "startDate", required = true) String startDate) {
-	// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	// LocalDate weekBeginDate= LocalDate.parse(startDate,formatter);
-	//
-	// return wellnessEventRepo.search(startDate);
-	// }
-
 	@RequestMapping(path = "api/event/searchStartDate", method = RequestMethod.GET)
 	@ApiOperation(value = "Search by Start Date", notes = "Search by starting date of wellness event")
 	public List<WellnessEvent> findByStartDate(@RequestParam String startsOn, @RequestParam String endsOn) {
