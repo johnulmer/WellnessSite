@@ -40,7 +40,7 @@ public class HeartrateActivityRow {
 		this.memberID = memberID;
 		this.statTimestamp = statTimestamp;
 		this.stat = stat;
-		SimpleDateFormat dt = new SimpleDateFormat("mm-dd-yyyyy hh:mm:ss");
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		this.formattedTime = dt.format(this.statTimestamp);
 	}
 	
