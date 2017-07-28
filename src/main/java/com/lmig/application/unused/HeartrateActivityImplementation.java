@@ -1,4 +1,4 @@
-package com.lmig.application.activityImplementations;
+package com.lmig.application.unused;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import com.lmig.application.WellnessSiteDB;
-import com.lmig.application.activityEntities.HeartrateActivityRow;
-import com.lmig.application.activityEntities.StepsOverTimeActivityRow;
 import com.lmig.application.entities.WellnessEvent;
 
 public class HeartrateActivityImplementation {

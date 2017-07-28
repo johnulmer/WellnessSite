@@ -1,6 +1,5 @@
 package com.lmig.application.activityHibernateEntities;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -15,34 +14,33 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-@Table(name="hibernateHeartrateActivityRow")
-public class HibernateHeartrateActivityRow {
-
+@Table(name="meetingGoalsActivityRow")
+public class MeetingGoalsActivityRow {
+	
 	@Id
 	@GeneratedValue
 	@ApiModelProperty(required = true)
 	int id;
-	
+
 	private int eventID;
 	private int memberID;
-	private Date statTimestamp;
-	private int stat;
-	private String formattedTime;
+	private Date goalDate;
+	private double goal;
+	private double actual;
 	
-
-	public HibernateHeartrateActivityRow() {
+	public MeetingGoalsActivityRow() {
 		
 	}
-	public HibernateHeartrateActivityRow(int eventID, 
+	public MeetingGoalsActivityRow(int eventID, 
 			int memberID, 
-			Date statTimestamp, 
-			int stat) {
+			Date goalDate, 
+			double goal, 
+			double actual) {
 		this.eventID = eventID;
 		this.memberID = memberID;
-		this.statTimestamp = statTimestamp;
-		this.stat = stat;
-		SimpleDateFormat dt = new SimpleDateFormat("mm-dd-yyyyy hh:mm:ss");
-		this.formattedTime = dt.format(this.statTimestamp);
+		this.goalDate = goalDate;
+		this.goal = goal;
+		this.actual = actual;
 	}
 	
 	public int getEventID() {
@@ -57,19 +55,29 @@ public class HibernateHeartrateActivityRow {
 	public void setMemberID(int memberID) {
 		this.memberID = memberID;
 	}
-	public Date getStatTimestamp() {
-		return statTimestamp;
+	public Date getGoalDate() {
+		return goalDate;
 	}
-	public void setStatTimestamp(Date statTimestamp) {
-		this.statTimestamp = statTimestamp;
+	public void setGoalDate(Date goalDate) {
+		this.goalDate = goalDate;
 	}
-	public String getFormattedTime() {
-		return formattedTime;
+	public double getGoal() {
+		return goal;
 	}
-	public int getStat() {
-		return stat;
+	public void setGoal(double goal) {
+		this.goal = goal;
 	}
-	public void setStat(int stat) {
-		this.stat = stat;
+	public double getActual() {
+		return actual;
 	}
+	public void setActual(double actual) {
+		this.actual = actual;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 }

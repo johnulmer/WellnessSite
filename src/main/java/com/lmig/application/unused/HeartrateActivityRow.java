@@ -1,4 +1,4 @@
-package com.lmig.application.activityEntities;
+package com.lmig.application.unused;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

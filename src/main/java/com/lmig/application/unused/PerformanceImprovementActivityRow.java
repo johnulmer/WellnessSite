@@ -1,4 +1,4 @@
-package com.lmig.application.activityEntities;
+package com.lmig.application.unused;
 
 public class PerformanceImprovementActivityRow {
 

@@ -1,4 +1,4 @@
-package com.lmig.application.activityImplementations;
+package com.lmig.application.unused;
 
 import java.sql.Array;
 import java.sql.Connection;
@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.lmig.application.WellnessSiteDB;
-import com.lmig.application.activityEntities.StepsOverTimeActivityRow;
 
 public class StepsOverTimeActivityImplementation {
 	

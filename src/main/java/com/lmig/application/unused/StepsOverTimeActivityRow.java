@@ -1,36 +1,18 @@
-package com.lmig.application.activityHibernateEntities;
+package com.lmig.application.unused;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class StepsOverTimeActivityRow {
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
-import io.swagger.annotations.ApiModelProperty;
-
-@Entity
-@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-@Table(name="hibernateStepsOverTimeActivityRow")
-public class HibernateStepsOverTimeActivityRow {
-
-	@Id
-	@GeneratedValue
-	@ApiModelProperty(required = true)
-	int id;
-	
 	private int wellnessEventID;
 	private int memberID;
 	private Date dayOfSteps;
 	private int stepCount;
 	
-	public HibernateStepsOverTimeActivityRow() {
+	public StepsOverTimeActivityRow() {
 		
 	}
-	public HibernateStepsOverTimeActivityRow(int wellnessEventID, 
+	public StepsOverTimeActivityRow(int wellnessEventID, 
 			int memberID, 
 			Date dayOfSteps, 
 			int stepCount) {
@@ -66,12 +48,6 @@ public class HibernateStepsOverTimeActivityRow {
 
 	public int getStepCount() {
 		return stepCount;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public void setStepCount(int stepCount) {
