@@ -187,33 +187,4 @@ public class WellnessEvent implements Serializable {
 		this.endsOn = endsOn;
 	}
 
-//	public Medallion getMedallion() {
-//		return medallion;
-//	}
-//	public void setMedallion(Medallion medallion) {
-//		this.medallion = medallion;
-//	}
-	
-
-//	public void merge(WellnessEvent other) {
-//		if (other.eventName != null) {
-//			this.eventName = other.eventName;
-//		}
-//		if (other.eventType != null) {
-//			this.eventType = other.eventType;
-//		}
-//		if (other.description != null) {
-//			this.description = other.description;
-//		}
-//		if (other.location != null) {
-//			this.location = other.location;
-//		}
-//		if (other.startsOn != null) {
-//			this.startsOn = other.startsOn;
-//		}
-//		if (other.endsOn != null) {
-//			this.endsOn = other.endsOn;
-//		}
-//	}
-
 }

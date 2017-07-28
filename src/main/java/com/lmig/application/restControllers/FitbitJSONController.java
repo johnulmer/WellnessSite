@@ -1,8 +1,12 @@
 package com.lmig.application.restControllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.IntSummaryStatistics;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,10 +17,14 @@ import com.lmig.application.activityEntities.HeartrateActivityRow;
 import com.lmig.application.activityEntities.MeetingGoalsActivityRow;
 import com.lmig.application.activityEntities.PerformanceImprovementActivityRow;
 import com.lmig.application.activityEntities.StepsOverTimeActivityRow;
+import com.lmig.application.activityHibernateEntities.HibernateHeartrateActivityRow;
+import com.lmig.application.activityHibernateEntities.HibernateStepsOverTimeActivityRow;
 import com.lmig.application.activityImplementations.HeartrateActivityImplementation;
 import com.lmig.application.activityImplementations.MeetingGoalsActivityImplementation;
 import com.lmig.application.activityImplementations.PerformanceImprovementActivityImplementation;
 import com.lmig.application.activityImplementations.StepsOverTimeActivityImplementation;
+import com.lmig.application.repositories.HibernateHeartrateActivityRowRepository;
+import com.lmig.application.repositories.HibernateStepsOverTimeActivityRowRepository;
 import com.lmig.application.repositories.WellnessEventRepo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +35,62 @@ public class FitbitJSONController {
 	
 	@Autowired
 	private WellnessEventRepo wellnessEventRepository;
+	
+	@Autowired
+	private HibernateHeartrateActivityRowRepository hibernateHeartrateActivityRowRepository;
+	
+	@Autowired
+	private HibernateStepsOverTimeActivityRowRepository hibernateStepsOverTimeActivityRowRepository;
+	
+//	public HibernateHeartrateActivityRow(int eventID, 
+//			int memberID, 
+//			Date statTimestamp, 
+//			int stat
+	
+	
+	@ApiOperation(value = "RESET Heartrate Activity rows - Attempt to use Hibernate to access Heartrate Activity")
+	@RequestMapping(path = "/api/activity/resetHeartrateRows", method = RequestMethod.GET)
+	public void resetHeartrateRows() {
+		hibernateHeartrateActivityRowRepository.deleteAll();
+		//hibernateHeartrateActivityRowRepository.save(new HibernateHeartrateActivityRow());
+//		StepsOverTimeActivityImplementation sotai = new StepsOverTimeActivityImplementation();
+//		return sotai.stepsOverTimeStatSummary(eventID);
+	}
+	
+	@ApiOperation(value = "RESET Steps Over Time Activity rows - Attempt to use Hibernate to access Steps Over Time Activity")
+	@RequestMapping(path = "/api/activity/getAllStepsOverTimeRows", method = RequestMethod.GET)
+	public List<HibernateStepsOverTimeActivityRow> getAllStepsOverTimeRows() {
+		return hibernateStepsOverTimeActivityRowRepository.findAll();
+	}
+	
+	@ApiOperation(value = "RESET Steps Over Time Activity rows - Attempt to use Hibernate to access Steps Over Time Activity")
+	@RequestMapping(path = "/api/activity/resetStepsOverTimeRows", method = RequestMethod.GET)
+	public void resetStepsOverTimeRows() {
+		hibernateStepsOverTimeActivityRowRepository.deleteAll();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(1, 1, formatter.parse("2017-07-21"), 1500));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(1, 2, formatter.parse("2017-07-21"), 4500));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(1, 3, formatter.parse("2017-07-21"), 3500));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(1, 1, formatter.parse("2017-07-22"), 11500));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(1, 2, formatter.parse("2017-07-22"), 15000));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(1, 3, formatter.parse("2017-07-22"), 10000));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(1, 1, formatter.parse("2017-07-23"), 2000));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(1, 2, formatter.parse("2017-07-23"), 1750));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(1, 3, formatter.parse("2017-07-23"), 3000));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(2, 4, formatter.parse("2017-07-22"), 15000));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(2, 5, formatter.parse("2017-07-22"), 4234));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(2, 6, formatter.parse("2017-07-22"), 3575));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(2, 4, formatter.parse("2017-07-23"), 21500));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(2, 5, formatter.parse("2017-07-23"), 15003));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(2, 6, formatter.parse("2017-07-23"), 10017));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(2, 4, formatter.parse("2017-07-24"), 8756));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(2, 5, formatter.parse("2017-07-24"), 2234));
+			hibernateStepsOverTimeActivityRowRepository.save(new HibernateStepsOverTimeActivityRow(2, 6, formatter.parse("2017-07-24"), 4576));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@ApiOperation(value = "Show the stat summary for a step event")
 	@RequestMapping(path = "/api/activity/stepsOverTimeStatSummary/{eventID}", method = RequestMethod.GET)

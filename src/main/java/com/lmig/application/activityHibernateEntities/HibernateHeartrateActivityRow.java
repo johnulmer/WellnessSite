@@ -3,17 +3,33 @@ package com.lmig.application.activityHibernateEntities;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import io.swagger.annotations.ApiModelProperty;
+
+@Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+@Table(name="hibernateHeartrateActivityRow")
 public class HibernateHeartrateActivityRow {
 
+	@Id
+	@GeneratedValue
+	@ApiModelProperty(required = true)
+	int id;
+	
 	private int eventID;
 	private int memberID;
 	private Date statTimestamp;
 	private int stat;
 	private String formattedTime;
 	
-	public String getFormattedTime() {
-		return formattedTime;
-	}
+
 	public HibernateHeartrateActivityRow() {
 		
 	}
@@ -46,6 +62,9 @@ public class HibernateHeartrateActivityRow {
 	}
 	public void setStatTimestamp(Date statTimestamp) {
 		this.statTimestamp = statTimestamp;
+	}
+	public String getFormattedTime() {
+		return formattedTime;
 	}
 	public int getStat() {
 		return stat;
