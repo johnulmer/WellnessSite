@@ -1,13 +1,12 @@
-package com.lmig.application.restControllers;
+package com.lmig.application.unused;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lmig.application.repositories.MedallionRepository;
 import io.swagger.annotations.Api;
 
-@RestController
-@Api(value="medallions", description="JSON operations pertaining to WellnessSite Medallions")
+//@RestController
+//@Api(value="medallions", description="JSON operations pertaining to WellnessSite Medallions")
 public class MedallionJSONController {
 	
 @Autowired

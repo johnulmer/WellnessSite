@@ -53,6 +53,7 @@ public class HeartrateActivityImplementation {
 		return returnList;
 	}
 	
+	
 	public ArrayList<Integer> getEventList() {
 		ArrayList<Integer> returnList = new ArrayList<Integer>();
 		String sql = "Select distinct \"EVENT_ID\" from public.\"HEARTRATE\"";
@@ -66,6 +67,21 @@ public class HeartrateActivityImplementation {
 		}
 		return returnList;
 	}
+	
+	public ArrayList<Integer> getMemberEventList(int memberID) {
+		ArrayList<Integer> returnList = new ArrayList<Integer>();
+		String sql = "select distinct \"EVENT_ID\" from public.\"HEARTRATE\" where \"MEMBER_ID\" = ?";
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, memberID);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				returnList.add(rs.getInt("EVENT_ID"));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return returnList;
+	}		
 	
 	public void reset() {
 		String dropTableSQL = "DROP TABLE IF EXISTS public.\"HEARTRATE\"";
@@ -103,11 +119,11 @@ public class HeartrateActivityImplementation {
 				"(2, 2, '2017-06-20 11:02:00', 94),\r\n" + 
 				"(2, 3, '2017-06-20 11:02:00', 75),\r\n" + 
 				"(7, 1, '2017-07-20 11:01:00', 55),\r\n" + 
-				"(7, 2, '2017-07-20 11:01:00', 64),\r\n" + 
-				"(7, 3, '2017-07-20 11:01:00', 52),\r\n" + 
+				"(7, 5, '2017-07-20 11:01:00', 64),\r\n" + 
+				"(7, 8, '2017-07-20 11:01:00', 52),\r\n" + 
 				"(7, 1, '2017-07-20 11:02:00', 63),\r\n" + 
-				"(7, 2, '2017-07-20 11:02:00', 84),\r\n" + 
-				"(7, 3, '2017-07-20 11:02:00', 74)";
+				"(7, 5, '2017-07-20 11:02:00', 84),\r\n" + 
+				"(7, 8, '2017-07-20 11:02:00', 74)";
 		try (Connection conn = this.connect(); 
 				PreparedStatement pstmtUpdateRows = conn.prepareStatement(updateRowsSQL);) {
 			pstmtUpdateRows.executeUpdate();
@@ -118,9 +134,10 @@ public class HeartrateActivityImplementation {
 	
 	public Connection connect() {
 		// SQLite connection string
-		String url = WellnessSiteDB.DBURL;
-		String username = WellnessSiteDB.DBUSER;
-		String password = WellnessSiteDB.DBPWD;
+		WellnessSiteDB wsdb = new WellnessSiteDB();
+		String url = wsdb.getDburl();
+		String username = wsdb.getDbuser();
+		String password = wsdb.getDbpwd();
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(url, username, password);

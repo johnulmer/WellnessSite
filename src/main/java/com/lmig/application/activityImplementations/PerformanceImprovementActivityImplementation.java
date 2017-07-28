@@ -45,6 +45,21 @@ public class PerformanceImprovementActivityImplementation {
 		return returnList;
 	}
 	
+	public ArrayList<Integer> getMemberEventList(int memberID) {
+		ArrayList<Integer> returnList = new ArrayList<Integer>();
+		String sql = "select distinct \"EVENT_ID\" from public.\"PERFORMANCE_IMPROVEMENT\" where \"MEMBER_ID\" = ?";
+		try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, memberID);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				returnList.add(rs.getInt("EVENT_ID"));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return returnList;
+	}	
+	
 	public void reset() {
 		String dropTableSQL = "DROP TABLE IF EXISTS public.\"PERFORMANCE_IMPROVEMENT\"";
 		String createTableSQL = "CREATE TABLE public.\"PERFORMANCE_IMPROVEMENT\"\r\n" + 
@@ -74,12 +89,12 @@ public class PerformanceImprovementActivityImplementation {
 		String updateRowsSQL = "INSERT INTO public.\"PERFORMANCE_IMPROVEMENT\" \r\n" + 
 				"(\"EVENT_ID\", \"MEMBER_ID\", \"START_STAT\", \"END_STAT\")\r\n" + 
 				"VALUES\r\n" + 
-				"(3, 1, 7.5, 5.0),\r\n" + 
-				"(3, 2, 8.5, 4.25),\r\n" + 
-				"(3, 3, 4.2, 3.1),\r\n" + 
-				"(6, 1, 6.2, 5.4),\r\n" + 
-				"(6, 2, 7.5, 6.25),\r\n" + 
-				"(6, 3, 8.2, 7.1)";
+				"(3, 2, 7.5, 5.0),\r\n" + 
+				"(3, 5, 8.5, 4.25),\r\n" + 
+				"(3, 7, 4.2, 3.1),\r\n" + 
+				"(6, 2, 6.2, 5.4),\r\n" + 
+				"(6, 3, 7.5, 6.25),\r\n" + 
+				"(6, 4, 8.2, 7.1)";
 		try (Connection conn = this.connect(); 
 				PreparedStatement pstmtUpdateRows = conn.prepareStatement(updateRowsSQL);) {
 			pstmtUpdateRows.executeUpdate();
@@ -90,9 +105,10 @@ public class PerformanceImprovementActivityImplementation {
 	
 public Connection connect() {
 	// SQLite connection string
-	String url = WellnessSiteDB.DBURL;
-	String username = WellnessSiteDB.DBUSER;
-	String password = WellnessSiteDB.DBPWD;
+	WellnessSiteDB wsdb = new WellnessSiteDB();
+	String url = wsdb.getDburl();
+	String username = wsdb.getDbuser();
+	String password = wsdb.getDbpwd();
 	Connection conn = null;
 	try {
 		conn = DriverManager.getConnection(url, username, password);
