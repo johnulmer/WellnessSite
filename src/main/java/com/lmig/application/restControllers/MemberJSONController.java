@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.lmig.application.entities.Member;
 import com.lmig.application.repositories.MemberRepository;
-import com.lmig.application.unused.MedallionRepository;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,8 +22,6 @@ public class MemberJSONController {
 
 	@Autowired
 	private MemberRepository memberRepository;
-	@Autowired
-	private MedallionRepository medallionRepository;
 
 	/**
 	 * Accepts a JSON Member object with email, password, screenName set & default

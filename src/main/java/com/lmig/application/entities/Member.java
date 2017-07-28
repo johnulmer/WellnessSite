@@ -50,16 +50,9 @@ public class Member {
 	@JsonBackReference
 	private Set<WellnessEvent> wellnessEvents;
 
-//    @OneToMany
-//	private Set<Medallion> medallions;
-
 	public Set<WellnessEvent> getWellnessEvents() {
 		return wellnessEvents;
 	}
-
-//	public void setWellnessEvents(Set<WellnessEvent> wellnessEvents) {
-//		this.wellnessEvents = wellnessEvents;
-//	}
 	
 	public Member() {
 	}
@@ -99,7 +92,6 @@ public class Member {
 		this.password = password;
 		this.active = active;
 		this.admin = admin;
-	//	this.medallions.add(medallion);
 	}
 	
 	public Member(String email, String password) {
@@ -114,17 +106,6 @@ public class Member {
 	public void setEncPassword(String encPassword) {
 		this.encPassword = PasswordEncoderGenerator(password);
 	}
-	
-	
-//	public void addMedallion(Medallion medallion) {
-//		this.medallions.add(medallion);
-//	}
-//	public void removeMedallion(Medallion medallion) {
-//		this.medallions.remove(medallion);
-//	}	
-//	public Set<Medallion> getMedallions() {
-//		return medallions;
-//	}
 	public int getId() {
 		return id;
 	}

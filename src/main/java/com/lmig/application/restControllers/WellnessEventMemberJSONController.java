@@ -127,7 +127,6 @@ public class WellnessEventMemberJSONController {
 		for (WellnessEvent we : eventList) {
 			WellnessEvent weRemoving = wellnessEventRepository.findOne(we.getId());
 			weRemoving.removeMember(removingMember);
-			// removingMember.removeMedallion(weRemoving.getMedallion());
 			wellnessEventRepository.saveAndFlush(weRemoving);
 		}
 	}

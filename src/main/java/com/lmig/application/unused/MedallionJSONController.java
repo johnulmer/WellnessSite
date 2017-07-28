@@ -8,18 +8,18 @@ import io.swagger.annotations.Api;
 //@RestController
 //@Api(value="medallions", description="JSON operations pertaining to WellnessSite Medallions")
 public class MedallionJSONController {
-	
-@Autowired
-private MedallionRepository medallionRepository;
-
-/**
- * Accepts a JSON Medallion object with title and description set, optionally with an event. 
- * returns JSON Medallion object with auto-generated ID.
- *
- * @param  addingMedallion A Medallion object with values for title and description, optionally with an event.
- * @return                 returnedMedallion with ID set
- * @see                    Medallion
- */
+//	
+//@Autowired
+//private MedallionRepository medallionRepository;
+//
+///**
+// * Accepts a JSON Medallion object with title and description set, optionally with an event. 
+// * returns JSON Medallion object with auto-generated ID.
+// *
+// * @param  addingMedallion A Medallion object with values for title and description, optionally with an event.
+// * @return                 returnedMedallion with ID set
+// * @see                    Medallion
+// */
 //@ApiOperation(value = "Adds a new medallion")
 //	@RequestMapping(path = "/api/medallion", method = RequestMethod.POST)
 //public Medallion addMedallion(@RequestBody @Valid Medallion addingMedallion) {
