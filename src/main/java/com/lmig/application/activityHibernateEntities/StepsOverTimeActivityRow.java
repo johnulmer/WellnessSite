@@ -1,5 +1,6 @@
 package com.lmig.application.activityHibernateEntities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -26,6 +27,7 @@ public class StepsOverTimeActivityRow {
 	private int memberID;
 	private Date dayOfSteps;
 	private int stepCount;
+	private String formattedTime;
 	
 	public StepsOverTimeActivityRow() {
 		
@@ -38,6 +40,8 @@ public class StepsOverTimeActivityRow {
 		this.memberID = memberID;
 		this.dayOfSteps = dayOfSteps;
 		this.stepCount = stepCount;
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		this.formattedTime = dt.format(this.dayOfSteps);
 	}
 
 	public int getWellnessEventID() {
@@ -63,7 +67,11 @@ public class StepsOverTimeActivityRow {
 	public void setDayOfSteps(Date dayOfSteps) {
 		this.dayOfSteps = dayOfSteps;
 	}
-
+	
+	public String getFormattedTime() {
+		return formattedTime;
+	}
+	
 	public int getStepCount() {
 		return stepCount;
 	}

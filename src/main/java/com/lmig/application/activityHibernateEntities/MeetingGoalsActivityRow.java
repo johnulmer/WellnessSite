@@ -1,5 +1,6 @@
 package com.lmig.application.activityHibernateEntities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -27,6 +28,7 @@ public class MeetingGoalsActivityRow {
 	private Date goalDate;
 	private double goal;
 	private double actual;
+	private String formattedTime;
 	
 	public MeetingGoalsActivityRow() {
 		
@@ -41,6 +43,8 @@ public class MeetingGoalsActivityRow {
 		this.goalDate = goalDate;
 		this.goal = goal;
 		this.actual = actual;
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		this.formattedTime = dt.format(this.goalDate);
 	}
 	
 	public int getEventID() {
@@ -60,6 +64,9 @@ public class MeetingGoalsActivityRow {
 	}
 	public void setGoalDate(Date goalDate) {
 		this.goalDate = goalDate;
+	}
+	public String getFormattedTime() {
+		return formattedTime;
 	}
 	public double getGoal() {
 		return goal;
