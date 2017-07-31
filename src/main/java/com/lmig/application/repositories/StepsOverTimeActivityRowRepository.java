@@ -14,7 +14,7 @@ public interface StepsOverTimeActivityRowRepository extends JpaRepository<StepsO
 	@Query("SELECT sotar from StepsOverTimeActivityRow sotar WHERE WellnessEventID = :wellnessEventID")
 	public List<StepsOverTimeActivityRow> findByEvent(@Param("wellnessEventID") int wellnessEventID);
 
-	@Query("SELECT sotar from StepsOverTimeActivityRow sotar WHERE MemberID = :memberID")
+	@Query("SELECT sotar from StepsOverTimeActivityRow sotar WHERE memberid = :memberID")
 	public List<StepsOverTimeActivityRow> findByMember(@Param("memberID") int memberID);
 	
 }

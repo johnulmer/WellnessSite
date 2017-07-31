@@ -3,7 +3,10 @@ package com.lmig.application.restControllers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.stream.Collectors;
+
 // Spring
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,15 +50,22 @@ public class FitbitJSONController {
 	
 	@ApiOperation(value = "Get Heartrate Activity rows per event")
 	@RequestMapping(path = "/api/activity/getAllHeartrateRowsByEvent/{wellnessEventID}", method = RequestMethod.GET)
-	public List<HeartrateActivityRow> getHeartrateRowsByEvent(int wellnessEventID) {
+	public List<HeartrateActivityRow> getHeartrateRowsByEvent(@PathVariable int wellnessEventID) {
 		return heartrateActivityRowRepository.findByEvent(wellnessEventID);
 	}	
 	
 	@ApiOperation(value = "Get Heartrate Activity rows per member")
 	@RequestMapping(path = "/api/activity/getAllHeartrateRowsByMember/{memberID}", method = RequestMethod.GET)
-	public List<HeartrateActivityRow> getHeartrateRowsByMember(int memberID) {
+	public List<HeartrateActivityRow> getHeartrateRowsByMember(@PathVariable int memberID) {
 		return heartrateActivityRowRepository.findByMember(memberID);
 	}	
+	
+	@ApiOperation(value = "Get Member Heartrate Summary")
+	@RequestMapping(path = "/api/activity/getHeartrateSummaryByMember/{memberID}", method = RequestMethod.GET)
+	public IntSummaryStatistics getHeartrateSummaryByMember(@PathVariable int memberID) {
+		List<HeartrateActivityRow> heartrateList = heartrateActivityRowRepository.findByMember(memberID);
+	    return heartrateList.stream().collect(Collectors.summarizingInt(HeartrateActivityRow::getStat));
+	}
 	
 	@ApiOperation(value = "Get all Steps Over Time Activity rows")
 	@RequestMapping(path = "/api/activity/getAllStepsOverTimeRows", method = RequestMethod.GET)
@@ -65,14 +75,21 @@ public class FitbitJSONController {
 	
 	@ApiOperation(value = "Get Steps Over Time Activity rows per event")
 	@RequestMapping(path = "/api/activity/getAllStepsOverTimeRowsByEvent/{wellnessEventID}", method = RequestMethod.GET)
-	public List<StepsOverTimeActivityRow> getAllStepsOverTimeRowsByEvent(int wellnessEventID) {
+	public List<StepsOverTimeActivityRow> getAllStepsOverTimeRowsByEvent(@PathVariable int wellnessEventID) {
 		return stepsOverTimeActivityRowRepository.findByEvent(wellnessEventID);
 	}
 	
 	@ApiOperation(value = "Get Steps Over Time Activity rows per member")
 	@RequestMapping(path = "/api/activity/getAllStepsOverTimeRowsByMember/{memberID}", method = RequestMethod.GET)
-	public List<StepsOverTimeActivityRow> getAllStepsOverTimeRowsByMember(int memberID) {
+	public List<StepsOverTimeActivityRow> getAllStepsOverTimeRowsByMember(@PathVariable int memberID) {
 		return stepsOverTimeActivityRowRepository.findByMember(memberID);
+	}
+	
+	@ApiOperation(value = "Get Member Steps Over Time Summary")
+	@RequestMapping(path = "/api/activity/getAllStepsOverTimeSummaryByMember/{memberID}", method = RequestMethod.GET)
+	public IntSummaryStatistics getStepsOverTimeSummaryByMember(@PathVariable int memberID) {
+		List<StepsOverTimeActivityRow> stepList = stepsOverTimeActivityRowRepository.findByMember(memberID);
+	    return stepList.stream().collect(Collectors.summarizingInt(StepsOverTimeActivityRow::getStepCount));
 	}
 	
 	@ApiOperation(value = "Get all Performance Improvement Activity rows")
@@ -83,13 +100,13 @@ public class FitbitJSONController {
 	
 	@ApiOperation(value = "Get Performance Improvement Activity rows per event")
 	@RequestMapping(path = "/api/activity/getAllPerformanceImprovementRowsByEvent/{wellnessEventID}", method = RequestMethod.GET)
-	public List<PerformanceImprovementActivityRow> getPerformanceImprovementRowsByEvent(int wellnessEventID) {
+	public List<PerformanceImprovementActivityRow> getPerformanceImprovementRowsByEvent(@PathVariable int wellnessEventID) {
 		return performanceImprovementActivityRowRepository.findByEvent(wellnessEventID);
 	}
 	
 	@ApiOperation(value = "Get Performance Improvement Activity rows per member")
 	@RequestMapping(path = "/api/activity/getAllPerformanceImprovementRowsByMember/{memberID}", method = RequestMethod.GET)
-	public List<PerformanceImprovementActivityRow> getPerformanceImprovementRowsByMember(int memberID) {
+	public List<PerformanceImprovementActivityRow> getPerformanceImprovementRowsByMember(@PathVariable int memberID) {
 		return performanceImprovementActivityRowRepository.findByMember(memberID);
 	}
 
@@ -101,13 +118,13 @@ public class FitbitJSONController {
 	
 	@ApiOperation(value = "Get Meeting Goals Activity rows per event")
 	@RequestMapping(path = "/api/activity/getAllMeetingGoalsRowsByEvent/{wellnessEventID}", method = RequestMethod.GET)
-	public List<MeetingGoalsActivityRow> getMeetingGoalsByEvent(int wellnessEventID) {
+	public List<MeetingGoalsActivityRow> getMeetingGoalsByEvent(@PathVariable int wellnessEventID) {
 		return meetingGoalsActivityRowRepository.findByEvent(wellnessEventID);
 	}
 	
 	@ApiOperation(value = "Get Meeting Goals Activity rows per member")
 	@RequestMapping(path = "/api/activity/getAllMeetingGoalsRowsByMember/{memberID}", method = RequestMethod.GET)
-	public List<MeetingGoalsActivityRow> getMeetingGoalsRowsByMember(int memberID) {
+	public List<MeetingGoalsActivityRow> getMeetingGoalsRowsByMember(@PathVariable int memberID) {
 		return meetingGoalsActivityRowRepository.findByMember(memberID);
 	}
 
