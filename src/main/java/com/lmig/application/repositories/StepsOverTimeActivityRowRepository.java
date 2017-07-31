@@ -11,7 +11,7 @@ import com.lmig.application.activityHibernateEntities.StepsOverTimeActivityRow;
 @Repository
 public interface StepsOverTimeActivityRowRepository extends JpaRepository<StepsOverTimeActivityRow, Integer> {
 	
-	@Query("SELECT sotar from StepsOverTimeActivityRow sotar WHERE WellnessEventID = :wellnessEventID")
+	@Query("SELECT sotar from StepsOverTimeActivityRow sotar WHERE Wellness_EventID = :wellnessEventID")
 	public List<StepsOverTimeActivityRow> findByEvent(@Param("wellnessEventID") int wellnessEventID);
 
 	@Query("SELECT sotar from StepsOverTimeActivityRow sotar WHERE memberid = :memberID")

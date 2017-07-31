@@ -11,7 +11,7 @@ import com.lmig.application.activityHibernateEntities.HeartrateActivityRow;
 @Repository
 public interface HeartrateActivityRowRepository extends JpaRepository<HeartrateActivityRow, Integer> {
 	
-	@Query("SELECT har from HeartrateActivityRow har WHERE wellnessEventID = :wellnessEventID")
+	@Query("SELECT har from HeartrateActivityRow har WHERE eventid = :wellnessEventID")
 	public List<HeartrateActivityRow> findByEvent(@Param("wellnessEventID") int wellnessEventID);
 
 	@Query("SELECT har from HeartrateActivityRow har WHERE MemberID = :memberID")

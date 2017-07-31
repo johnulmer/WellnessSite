@@ -11,7 +11,7 @@ import com.lmig.application.activityHibernateEntities.PerformanceImprovementActi
 @Repository
 public interface PerformanceImprovementActivityRowRepository extends JpaRepository<PerformanceImprovementActivityRow, Integer> {
 	
-	@Query("SELECT piar from PerformanceImprovementActivityRow piar WHERE WellnessEventID = :wellnessEventID")
+	@Query("SELECT piar from PerformanceImprovementActivityRow piar WHERE eventid = :wellnessEventID")
 	public List<PerformanceImprovementActivityRow> findByEvent(@Param("wellnessEventID") int wellnessEventID);
 
 	@Query("SELECT piar from PerformanceImprovementActivityRow piar WHERE MemberID = :memberID")
