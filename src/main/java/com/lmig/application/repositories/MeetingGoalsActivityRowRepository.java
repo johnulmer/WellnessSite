@@ -14,4 +14,6 @@ public interface MeetingGoalsActivityRowRepository extends JpaRepository<Meeting
 	@Query("SELECT mgar from MeetingGoalsActivityRow mgar WHERE WellnessEventID = :wellnessEventID")
 	public List<MeetingGoalsActivityRow> findByEvent(@Param("wellnessEventID") int wellnessEventID);
 
+	@Query("SELECT mgar from MeetingGoalsActivityRow mgar WHERE MemberID = :memberID")
+	public List<MeetingGoalsActivityRow> findByMember(@Param("memberID") int memberID);
 }

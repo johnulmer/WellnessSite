@@ -28,7 +28,11 @@ public class HeartrateActivityRow {
 	private Date statTimestamp;
 	private int stat;
 	private String formattedTime;
+	private String formattedMinute;
 
+	public String getFormattedMinute() {
+		return formattedMinute;
+	}
 	public HeartrateActivityRow() {
 		
 	}
@@ -40,8 +44,10 @@ public class HeartrateActivityRow {
 		this.memberID = memberID;
 		this.statTimestamp = statTimestamp;
 		this.stat = stat;
-		SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		this.formattedTime = dt.format(this.statTimestamp);
+		SimpleDateFormat dtm = new SimpleDateFormat("mm");
+		this.formattedMinute = dtm.format(this.statTimestamp);
 	}
 	
 	public int getEventID() {

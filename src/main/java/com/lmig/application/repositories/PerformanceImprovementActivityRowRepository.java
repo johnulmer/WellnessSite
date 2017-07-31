@@ -14,4 +14,7 @@ public interface PerformanceImprovementActivityRowRepository extends JpaReposito
 	@Query("SELECT piar from PerformanceImprovementActivityRow piar WHERE WellnessEventID = :wellnessEventID")
 	public List<PerformanceImprovementActivityRow> findByEvent(@Param("wellnessEventID") int wellnessEventID);
 
+	@Query("SELECT piar from PerformanceImprovementActivityRow piar WHERE MemberID = :memberID")
+	public List<PerformanceImprovementActivityRow> findByMember(@Param("memberID") int memberID);
+	
 }

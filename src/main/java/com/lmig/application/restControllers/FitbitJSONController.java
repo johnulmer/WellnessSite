@@ -51,6 +51,12 @@ public class FitbitJSONController {
 		return heartrateActivityRowRepository.findByEvent(wellnessEventID);
 	}	
 	
+	@ApiOperation(value = "Get Heartrate Activity rows per member")
+	@RequestMapping(path = "/api/activity/getAllHeartrateRowsByMember/{memberID}", method = RequestMethod.GET)
+	public List<HeartrateActivityRow> getHeartrateRowsByMember(int memberID) {
+		return heartrateActivityRowRepository.findByMember(memberID);
+	}	
+	
 	@ApiOperation(value = "Get all Steps Over Time Activity rows")
 	@RequestMapping(path = "/api/activity/getAllStepsOverTimeRows", method = RequestMethod.GET)
 	public List<StepsOverTimeActivityRow> getAllStepsOverTimeRows() {
@@ -61,6 +67,12 @@ public class FitbitJSONController {
 	@RequestMapping(path = "/api/activity/getAllStepsOverTimeRowsByEvent/{wellnessEventID}", method = RequestMethod.GET)
 	public List<StepsOverTimeActivityRow> getAllStepsOverTimeRowsByEvent(int wellnessEventID) {
 		return stepsOverTimeActivityRowRepository.findByEvent(wellnessEventID);
+	}
+	
+	@ApiOperation(value = "Get Steps Over Time Activity rows per member")
+	@RequestMapping(path = "/api/activity/getAllStepsOverTimeRowsByMember/{memberID}", method = RequestMethod.GET)
+	public List<StepsOverTimeActivityRow> getAllStepsOverTimeRowsByMember(int memberID) {
+		return stepsOverTimeActivityRowRepository.findByMember(memberID);
 	}
 	
 	@ApiOperation(value = "Get all Performance Improvement Activity rows")
@@ -74,6 +86,12 @@ public class FitbitJSONController {
 	public List<PerformanceImprovementActivityRow> getPerformanceImprovementRowsByEvent(int wellnessEventID) {
 		return performanceImprovementActivityRowRepository.findByEvent(wellnessEventID);
 	}
+	
+	@ApiOperation(value = "Get Performance Improvement Activity rows per member")
+	@RequestMapping(path = "/api/activity/getAllPerformanceImprovementRowsByMember/{memberID}", method = RequestMethod.GET)
+	public List<PerformanceImprovementActivityRow> getPerformanceImprovementRowsByMember(int memberID) {
+		return performanceImprovementActivityRowRepository.findByMember(memberID);
+	}
 
 	@ApiOperation(value = "Get all Meeting Goals Activity rows")
 	@RequestMapping(path = "/api/activity/getAllMeetingGoalsRows", method = RequestMethod.GET)
@@ -82,9 +100,15 @@ public class FitbitJSONController {
 	}
 	
 	@ApiOperation(value = "Get Meeting Goals Activity rows per event")
-	@RequestMapping(path = "/api/activity/getAllMeetingGoalsRows/{wellnessEventID}", method = RequestMethod.GET)
-	public List<MeetingGoalsActivityRow> getAllMeetingGoalsRows(int wellnessEventID) {
+	@RequestMapping(path = "/api/activity/getAllMeetingGoalsRowsByEvent/{wellnessEventID}", method = RequestMethod.GET)
+	public List<MeetingGoalsActivityRow> getMeetingGoalsByEvent(int wellnessEventID) {
 		return meetingGoalsActivityRowRepository.findByEvent(wellnessEventID);
+	}
+	
+	@ApiOperation(value = "Get Meeting Goals Activity rows per member")
+	@RequestMapping(path = "/api/activity/getAllMeetingGoalsRowsByMember/{memberID}", method = RequestMethod.GET)
+	public List<MeetingGoalsActivityRow> getMeetingGoalsRowsByMember(int memberID) {
+		return meetingGoalsActivityRowRepository.findByMember(memberID);
 	}
 
 //	@ApiOperation(value = "Show the stat summary for a step event")

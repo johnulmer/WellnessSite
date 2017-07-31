@@ -43,7 +43,7 @@ public class MeetingGoalsActivityRow {
 		this.goalDate = goalDate;
 		this.goal = goal;
 		this.actual = actual;
-		SimpleDateFormat dt = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		this.formattedTime = dt.format(this.goalDate);
 	}
 	

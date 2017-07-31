@@ -14,4 +14,7 @@ public interface HeartrateActivityRowRepository extends JpaRepository<HeartrateA
 	@Query("SELECT har from HeartrateActivityRow har WHERE WellnessEventID = :wellnessEventID")
 	public List<HeartrateActivityRow> findByEvent(@Param("wellnessEventID") int wellnessEventID);
 
+	@Query("SELECT har from HeartrateActivityRow har WHERE MemberID = :memberID")
+	public List<HeartrateActivityRow> findByMember(@Param("memberID") int memberID);
+
 }
