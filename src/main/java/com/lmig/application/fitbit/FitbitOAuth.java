@@ -28,7 +28,7 @@ public class FitbitOAuth extends WebSecurityConfigurerAdapter {
 //	String fitbitActivitiesUri;
 //
 //	@RequestMapping("/lifetime-activity")
-//	public LifetimeActiviifetimeActty livity() {
+//	public LifetimeActivity lifetimeActivity() {
 //		LifetimeActivity lifetimeActivity;
 //
 //		try {

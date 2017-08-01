@@ -2,7 +2,7 @@ package com.lmig.application.restControllers;
 
 import com.lmig.application.entities.Member;
 import com.lmig.application.repositories.MemberRepository;
-import com.lmig.application.security.TokenGenerator;
+//import com.lmig.application.security.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +46,4 @@ public class AuthenticationController {
 		return new ResponseEntity<Member>(HttpStatus.UNAUTHORIZED);
 	}
 	
-	
-
-
 }

@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 // Spring
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +20,7 @@ import com.lmig.application.activityHibernateEntities.HeartrateActivityRow;
 import com.lmig.application.activityHibernateEntities.MeetingGoalsActivityRow;
 import com.lmig.application.activityHibernateEntities.PerformanceImprovementActivityRow;
 import com.lmig.application.activityHibernateEntities.StepsOverTimeActivityRow;
+import com.lmig.application.entities.WellnessEvent;
 import com.lmig.application.repositories.HeartrateActivityRowRepository;
 import com.lmig.application.repositories.MeetingGoalsActivityRowRepository;
 import com.lmig.application.repositories.PerformanceImprovementActivityRowRepository;
