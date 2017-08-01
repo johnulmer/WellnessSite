@@ -20,7 +20,7 @@ import java.security.Principal;
 //@RestController
 //@EnableWebSecurity
 public class FitbitOAuth extends WebSecurityConfigurerAdapter {
-
+//
 //	@Autowired
 //	OAuth2RestTemplate fitbitOAuthRestTemplate;
 //
