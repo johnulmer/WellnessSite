@@ -228,12 +228,17 @@ public class MemberJSONController {
 		// System.out.println(joinerMedallion.getId() + joinerMedallion.getTitle() +
 		// joinerMedallion.getDescription());
 		// m1.addMedallion(joinerMedallion);
-		memberRepository.save(new Member("john1", "john1@blah.com", "pwd", true, true));
-		memberRepository.save(new Member("john2", "john2@blah.com", "pwd", true, false));
-		memberRepository.save(new Member("john3", "john3@blah.com", "pwd", true, true));
-		memberRepository.save(new Member("john4", "john4@blah.com", "pwd", true, true));
-		memberRepository.save(new Member("john5", "john5@blah.com", "pwd", true, false));
-		memberRepository.save(new Member("john6", "john6@blah.com", "pwd", true, false));
+		memberRepository.save(new Member("Jeb", "jeb@lmig.com", "pwd", true, false));
+		memberRepository.save(new Member("Dave", "dave@lmig.com", "pwd", true, false));
+		memberRepository.save(new Member("Joe", "joe@lmig.com", "pwd", true, false));
+		memberRepository.save(new Member("Lucas", "lucas@lmig.com", "pwd", true, false));
+		memberRepository.save(new Member("Kayla", "kayla@lmig.com", "pwd", true, false));
+		memberRepository.save(new Member("Nick", "nick@lmig.com", "pwd", true, false));
+		memberRepository.save(new Member("Elizabeth", "elizabetg@lmig.com", "pwd", true, false));
+		memberRepository.save(new Member("David", "david@lmig.com", "pwd", true, false));
+		memberRepository.save(new Member("Chris", "chris@lmig.com", "pwd", true, false));
+		memberRepository.save(new Member("Katy", "katy@lmig.com", "pwd", true, false));
+		memberRepository.save(new Member("Prakash", "prakash@lmig.com", "pwd", true, false));
 		// Member me = memberRepository.getOne(1);
 		// me.addMedallion(new Medallion("huzzah", "i love flair!"));
 		// me.addMedallion(new Medallion("what", "another one?"));
