@@ -20,7 +20,7 @@ import java.security.Principal;
 //@RestController
 //@EnableWebSecurity
 public class FitbitOAuth extends WebSecurityConfigurerAdapter {
-
+//
 //	@Autowired
 //	OAuth2RestTemplate fitbitOAuthRestTemplate;
 //
@@ -28,7 +28,7 @@ public class FitbitOAuth extends WebSecurityConfigurerAdapter {
 //	String fitbitActivitiesUri;
 //
 //	@RequestMapping("/lifetime-activity")
-//	public LifetimeActiviifetimeActty livity() {
+//	public LifetimeActivity lifetimeActivity() {
 //		LifetimeActivity lifetimeActivity;
 //
 //		try {

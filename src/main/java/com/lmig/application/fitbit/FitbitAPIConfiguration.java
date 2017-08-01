@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 //@EnableOAuth2Sso
 //@Configuration
 public class FitbitAPIConfiguration {
-
+//
 //    @Bean
 //    OAuth2RestTemplate fitbitOAuthRestTemplate(UserInfoRestTemplateFactory uir) {
 //        return uir.getUserInfoRestTemplate();

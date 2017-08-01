@@ -40,7 +40,7 @@ public class StepsOverTimeActivityRow {
 		this.memberID = memberID;
 		this.dayOfSteps = dayOfSteps;
 		this.stepCount = stepCount;
-		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
 		this.formattedTime = dt.format(this.dayOfSteps);
 	}
 

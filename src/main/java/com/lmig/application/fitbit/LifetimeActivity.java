@@ -1,7 +1,7 @@
 package com.lmig.application.fitbit;
 
 public class LifetimeActivity {
-
+//
 //    private int caloriesOut = 0;
 //    private float distance = 0;
 //    private int floors = 0;
