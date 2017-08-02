@@ -314,6 +314,14 @@ public void resetMeetingGoalsRows() {
 	}
 	}
 
+
+//private int eventID;
+//private int memberID;
+//private Date statTimestamp;
+//private int stat;
+//private String formattedTime;
+//private String formattedMinute;
+
 @ApiOperation(value = "RESET Heartrate Activity rows")
 @RequestMapping(path = "/api/activity/resetHeartrateRows", method = RequestMethod.GET)
 public void resetHeartrateRows() {
